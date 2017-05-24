@@ -1,0 +1,7 @@
+name: leaflet_rs
+author: Sasha Renninger, Rachel Cohen, Anna Marion
+version: 1.0
+desc: Embeds a leaflet map of all geographic data from a collection on the home page.
+info_url:
+config_url: /plugins/leaflet_rs/pages/setup.php
+default_priority:999
