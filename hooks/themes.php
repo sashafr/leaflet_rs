@@ -19,7 +19,7 @@ function HookLeaflet_rsThemesThemeHeader() {
     }
 
     //query rows in resource table that have a lat and long
-    $query = 'SELECT field8, geo_lat, geo_long FROM resource WHERE geo_lat != "NULL" LIMIT 1';
+    $query = 'SELECT field8, geo_lat, geo_long FROM resource WHERE geo_lat != "NULL"';
 
     //query returns title, geo_lat, geo_long
     $result = mysqli_query($connection, $query);
@@ -28,19 +28,20 @@ function HookLeaflet_rsThemesThemeHeader() {
     }
 
     //write query results in geoJSON format array
-    while ($rows = mysqli_fetch_assoc($result)) {
-            $to_geojson = array(
+    while ($row = mysqli_fetch_assoc($result)) {
+            $to_geojson[] = array(
                 'type' => 'Feature',
                 'geometry' => array(
                     'type' => 'Point',
-                    'coordinates' => [(float)$rows["geo_long"], (float)$rows["geo_lat"]],
-                    ),
+                    'coordinates' => [(float)$row["geo_long"], (float)$row["geo_lat"]],
+                  ),
                 'properties' => array(
-                    'name' => $rows["field8"],
+                    'name' => $row["field8"],
                     )
             );
        }
 
+       echo '<pre>'; print_r($to_geojson); echo '</pre>';
        // encodes the array into a string in JSON format (JSON_PRETTY_PRINT - uses whitespace in json-string, for human readable)
        $geojson = json_encode($to_geojson, JSON_PRETTY_PRINT);
        echo 'test database retrieval to geoJSON <br>';
