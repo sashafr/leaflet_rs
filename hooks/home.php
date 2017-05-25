@@ -44,11 +44,54 @@ function HookLeaflet_rsHomeHomebeforepanels() {
     <?php
 }
 function HookLeaflet_rsHomeFooterbottom() {
+
+    //database configuration information -- from var/www/resourcespace/include/config.php
+    $host = "localhost";
+    $user = "root";
+    $pass = "Violet7Rift";
+    $database = "resourcespace";
+
+    //static $connection; //avoid connection with every query
+
+    //open connection to mySQL server
+    $connection = mysqli_connect($host, $user, $pass, $database);
+    if (!$connection) {
+      //die("Not connected : " . mysql_error());
+      echo "Not connected : " . mysqli_connect_error();
+    }
+
+    //query rows in resource table that have a lat and long
+    $query = 'SELECT field8, geo_lat, geo_long FROM resource WHERE geo_lat != "NULL"';
+
+    //query returns title, geo_lat, geo_long
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+      echo "Invalid query: " . mysqli_error($connection);
+    }
+
+    //write query results in geoJSON format array
+    while ($row = mysqli_fetch_assoc($result)) {
+            $to_geojson[] = array(
+                'type' => 'Feature',
+                'geometry' => array(
+                    'type' => 'Point',
+                    'coordinates' => [(float)$row["geo_long"], (float)$row["geo_lat"]],
+                  ),
+                'properties' => array(
+                    'name' => $row["field8"],
+                    )
+            );
+       }
+
+       // encodes the array into a string in JSON format (JSON_PRETTY_PRINT - uses whitespace in json-string, for human readable)
+       //$geojson = json_encode($to_geojson, JSON_PRETTY_PRINT);
+
     ?>
+
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
     <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
     <script>
-        var map = L.map('leaflet_rs_map').setView([39.9526, -75.1652], 5);
+        var map = L.map('leaflet_rs_map').setView([39.9526, -75.1652], 13);
         L.esri.basemapLayer('Streets').addTo(map);
       //  L.esri.featureLayer({
         //    url: 'https://services.arcgis.com/rOo16HdIMeOBI4Mb/arcgis/rest/services/Heritage_Trees_Portland/FeatureServer/0'
@@ -56,22 +99,39 @@ function HookLeaflet_rsHomeFooterbottom() {
 
 
 
+             function onEachFeature(feature, layer) {
+                       // does this feature have a property named popupContent?
+                     if (feature.properties && feature.properties.name) {
+                        layer.bindPopup(feature.properties.name);
+                       }
 
-        function onEachFeature(feature, layer) {
+                   }
+
+      //  function onEachFeature(feature, layer) {
                   // does this feature have a property named popupContent?
-                if (feature.properties && feature.properties.popupContent && feature.properties.toponym) {
-                   layer.bindPopup("<b>"+"NAME: "+"</b>" + feature.properties.toponym + "<br />" +
-                   feature.properties.popupContent);
+        //        if (feature.properties && feature.properties.popupContent && feature.properties.toponym) {
+          //         layer.bindPopup("<b>"+"NAME: "+"</b>" + feature.properties.toponym + "<br />" +
+            //       feature.properties.popupContent);
                    //layer.bindPopup(feature.properties.popupContent);
-                  }
+              //    }
 
-              }
+              //}
+
+              var jsonPts = <?php echo json_encode($to_geojson); ?>;
+              L.geoJson(jsonPts, {
+                      onEachFeature: onEachFeature
+                   , pointToLayer: function (feature, latlng) {
+                      return L.circleMarker(latlng, geojsonMarkerOptions);
+                   } }).addTo(map);
+
 
          L.geoJSON(myPoints, {
                  onEachFeature: onEachFeature
               , pointToLayer: function (feature, latlng) {
                  return L.circleMarker(latlng, geojsonMarkerOptions);
               } }).addTo(map);
+
+
 
 
 
