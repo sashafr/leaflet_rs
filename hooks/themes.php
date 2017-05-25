@@ -33,7 +33,7 @@ function HookLeaflet_rsThemesThemeHeader() {
                 'type' => 'Feature',
                 'geometry' => array(
                     'type' => 'Point',
-                    'coordinates' => [$rows["geo_lat"], $rows["geo_long"]],
+                    'coordinates' => [(float)$rows["geo_long"], (float)$rows["geo_lat"]],
                     ),
                 'properties' => array(
                     'name' => $rows["field8"],
