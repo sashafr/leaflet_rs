@@ -28,7 +28,22 @@ function HookLeaflet_rsHomeHomebeforepanels() {
     </style>
 
     <div id="leaflet_rs_map"> </div>
+
+
+        <select id = "nameSelect">
+    		<option value="Monument Lab Image">Monument Lab Image</option>
+    		<option value="doc_test">doc_test</option>
+    		<option value="ace_test">ace_test</option>
+
+    		</select>
+
+    		<input type="submit" onclick="searchPoints();" value="Search by name"/>
+
+        <input type = "button" value = "Show all" onClick = "showAll();"/>
+
+
 <!--
+
     <div id="query" class="leaflet-bar">
     <label>
       Name
@@ -94,7 +109,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
-
+<!--
     <script type="text/javascript" src="leaflet.js"></script>
     <script type="text/javascript" src="tabletop.min.js"></script>
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -102,22 +117,21 @@ function HookLeaflet_rsHomeFooterbottom() {
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="//labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css">
     <script type="text/javascript" src="//labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
-
+-->
     <script>
 
-    var map = L.map('leaflet_rs_map').setView([39.9526, -75.1652], 13);
+    var map = L.map('leaflet_rs_map');
+    //.setView([39.9526, -75.1652], 13);
     L.esri.basemapLayer('Streets').addTo(map);
 
     function onEachFeature(feature, layer) {
-      //alert("onEachFeature");
               // does this feature have a property named popupContent?
               if (feature.properties && feature.properties.name) {
-                //  alert(feature.properties.name);
-                  layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />" + "<br />"+ "<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1&size=thm' width=60 height=50 ></a>", {maxWidth:60});
+                  layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />"  +"<br />"+ "<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1&size=thm' width=60 height=50 ></a>", {maxWidth:60});
                   }
     };
 
-    var markersLayer = new L.LayerGroup();
+
 
     var geojsonMarkerOptions = {
         radius: 4,
@@ -129,32 +143,34 @@ function HookLeaflet_rsHomeFooterbottom() {
     };
 
     var jsonPts = <?php echo json_encode($to_geojson); ?>;
-    var markerArray = [];
 
-  /*  var jsonLyr = L.geoJson(jsonPts, {
+    var jsonLyr = L.geoJson(jsonPts, {
         onEachFeature: onEachFeature
         , pointToLayer: function (feature, latlng) {
-        var marker =  L.circleMarker(latlng, geojsonMarkerOptions);
-        //return marker;
-        markersLayer.addLayer(marker);
-        } }).addTo(map);
-*/
-
-        L.geoJSON(jsonPts, {
-                              onEachFeature: onEachFeature
-                           , pointToLayer: function (feature, latlng) {
-                              return L.circleMarker(latlng, geojsonMarkerOptions);
-                           } }).addTo(map);
+      var marker = L.circleMarker(latlng, geojsonMarkerOptions);
+        return marker;
+        }
+      });
+      jsonLyr.addTo(map);
+      map.fitBounds(jsonLyr.getBounds());
 
 
 
-//    markersLayer.addTo(map);
+      //Get bounds for greater Philadelphia area and restrict geocoder searchBounds
+      //to those bounds
+
+    var corner1 = L.latLng(40.11194, -75.30556);
+    var corner2 = L.latLng(39.84556, -74.95556);
+    bounds = L.latLngBounds(corner1, corner2);
 
 
+    var geoOptions = {
+      title: "Search Location",
+      searchBounds: bounds
+    };
 
-
-/*
-     var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+    //Create geocoder
+     var searchControl = L.esri.Geocoding.geosearch(geoOptions).addTo(map);
 
      var results = L.layerGroup().addTo(map);
 
@@ -166,99 +182,37 @@ function HookLeaflet_rsHomeFooterbottom() {
         }
       });
 
-
-    //creating the selector control
-    //**********************************************************************
-
-    //create Leaflet control for selector
-    var selector = L.control({
-      position: 'topright'
-    });
-
-    selector.onAdd = function(map) {
-      //create div container
-      var div = L.DomUtil.create('div', 'mySelector');
-      //create select element within container (with id, so it can be populated later
-      div.innerHTML = '<select id="marker_select"><option value="init">(select name)</option></select>';
-      return div;
+      //Add all points back onto the map
+    function showAll(){
+      jsonLyr.addTo(map);
+      map.fitBounds(jsonLyr.getBounds());
     };
-    selector.addTo(map);
 
-    alert("selector added");
-    jsonLyr.eachLayer(function(layer) {
-      //create option in selector element
-      //with content set to city name
-      //and value set to the layer's internal ID
-      var optionElement = document.createElement("option");
-      optionElement.innerHTML = layer.feature.geometry.type;
-      optionElement.value = layer._leaflet_id;
-      L.DomUtil.get("marker_select").appendChild(optionElement);
-    });
 
-    var marker_select = L.DomUtil.get("marker_select");
+    var pointsLayer = new L.FeatureGroup();
 
-    //prevent clicks on the selector from propagating through to the map
-    //(otherwise popups will close immediately after opening)
-    L.DomEvent.addListener(marker_select, 'click', function(e) {
-      L.DomEvent.stopPropagation(e);
-    });
-
-    L.DomEvent.addListener(marker_select, 'change', changeHandler);
-
-    function changeHandler(e) {
-      if (e.target.value == "init") {
-        map.closePopup();
-      } else {
-        jsonLyr.getLayer(e.target.value).openPopup();
+    //Select points by attribute
+   function searchPoints(){
+      var jsonLyr2 = jsonLyr;
+      var title = document.getElementById('nameSelect').value;
+      map.removeLayer(jsonLyr);
+      pointsLayer.clearLayers();
+      jsonLyr2.eachLayer(function(layer) {
+        if (layer.feature.properties.name == title) {
+        pointsLayer.addLayer(layer);
+        map.addLayer(pointsLayer);
       }
     }
 
-    function timePeriod(){
-        markersLayer.clearLayers();
-        var period = document.getElementById('periodSelect').value;
-        //alert(period);
-        jsonLyr.eachLayer(function(layer) {
-        //
-           if (layer.feature.geometry.type == period){
-             alert(layer.feature.geometry.coordinates);
-           };
-        };
-    )};
+  );
+    //set bounds to the selected features
+     var latlngbounds = new L.latLngBounds(pointsLayer.getBounds());
+     map.fitBounds(latlngbounds);
 
-    map.addControl( new L.Control.Search({layer: jsonLyr}) );
-    var searchControl = new L.Control.Search({
-        layer: jsonLyr,
-        propertyName: 'name',
-        circleLocation:true
+  };
 
-   });
-
-   searchControl.on('search:locationfound', function(e) {
-
-		//console.log('search:locationfound', );
-		//map.removeLayer(this._markerSearch)
-		e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});
-		if(e.layer._popup)
-			e.layer.openPopup();
-  	}).on('search:collapsed', function(e) {
-  		featuresLayer.eachLayer(function(layer) {	//restore feature color
-  			featuresLayer.resetStyle(layer);
-  		})
-  	});
-
-    map.addControl(window.searchControl);
-*/
     </script>
-<!--
-    <select id = "periodSelect">
-		<option value="Point">Point</option>
-		<option value="2">Early Iron Age</option>
-		<option value="3">Late Iron Age</option>
-		<option value="4">Classical</option>
-		</select>
 
-		<input type="submit" onclick="timePeriod();" value="Search by period"/>
--->
 <?php
 }
 ?>
