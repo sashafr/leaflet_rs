@@ -58,7 +58,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     }
 
     //query rows in resource table that have a lat and long
-    $query = 'SELECT field8, geo_lat, geo_long FROM resource WHERE geo_lat != "NULL"';
+    $query = 'SELECT ref, field8, geo_lat, geo_long FROM resource WHERE geo_lat != "NULL"';
 
     //query returns title, geo_lat, geo_long
     $result = mysqli_query($connection, $query);
@@ -72,10 +72,11 @@ function HookLeaflet_rsHomeFooterbottom() {
                 'type' => 'Feature',
                 'geometry' => array(
                     'type' => 'Point',
-                    'coordinates' => [(float)$row["geo_long"], (float)$row["geo_lat"]],
+                    'coordinates' => [(float)$row["geo_long"], (float)$row["geo_lat"]]
                   ),
                 'properties' => array(
                     'name' => $row["field8"],
+                    'ref' => $row["ref"]
                     )
             );
        }
