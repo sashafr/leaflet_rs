@@ -53,8 +53,8 @@ function HookLeaflet_rsHomeFooterbottom() {
     //open connection to mySQL server
     $connection = mysqli_connect($host, $user, $pass, $database);
     if (!$connection) {
-      //die("Not connected : " . mysql_error());
-      echo "Not connected : " . mysqli_connect_error();
+        //die("Not connected : " . mysql_error());
+        echo "Not connected : " . mysqli_connect_error();
     }
 
     //query rows in resource table that have a lat and long
@@ -63,7 +63,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     //query returns title, geo_lat, geo_long
     $result = mysqli_query($connection, $query);
     if (!$result) {
-      echo "Invalid query: " . mysqli_error($connection);
+        echo "Invalid query: " . mysqli_error($connection);
     }
 
     //write query results in geoJSON format array
@@ -79,11 +79,10 @@ function HookLeaflet_rsHomeFooterbottom() {
                     'ref' => $row["ref"]
                     )
             );
-       }
+    }
 
     ?>
 
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
     <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
@@ -96,17 +95,16 @@ function HookLeaflet_rsHomeFooterbottom() {
 
     //add popups to map features
     function onEachFeature(feature, layer) {
-        // does this feature have a property named popupContent?
         var html = "<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" + feature.properties.ref + "'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" + feature.properties.ref + "&size=thm' width=60 height=50 ></a>";
         if (feature.properties && feature.properties.name && feature.properties.ref) {
             layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />"  +"<br />"+ html, {maxWidth:60});
         }
     };
-//"<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1&size=thm' width=60 height=50 ></a>"
+
     //format map markers
     var geojsonMarkerOptions = {
         radius: 4,
-        fillColor: "#ff7800",
+        fillColor: "#6495ED",
         color: "#000",
         weight: 1,
         opacity: 1,
