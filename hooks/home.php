@@ -97,11 +97,12 @@ function HookLeaflet_rsHomeFooterbottom() {
     //add popups to map features
     function onEachFeature(feature, layer) {
         // does this feature have a property named popupContent?
-        if (feature.properties && feature.properties.name) {
-            layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />"  +"<br />"+ "<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1&size=thm' width=60 height=50 ></a>", {maxWidth:60});
+        var html = "<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" + feature.properties.ref + "'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" + feature.properties.ref + "&size=thm' width=60 height=50 ></a>";
+        if (feature.properties && feature.properties.name && feature.properties.ref) {
+            layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />"  +"<br />"+ html, {maxWidth:60});
         }
     };
-
+//"<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=1&size=thm' width=60 height=50 ></a>"
     //format map markers
     var geojsonMarkerOptions = {
         radius: 4,
