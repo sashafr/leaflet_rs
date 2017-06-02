@@ -29,8 +29,8 @@ function HookLeaflet_rsHomeHomebeforepanels() {
     <div id="leaflet_rs_map"></div>
 
     <select id = "nameSelect">
-		<option value="ace test">ace test</option>
-    <option value="demo test">demo_test</option>
+		<option value="koala">koala</option>
+    <option value="politicians ruin everything">politicians ruin everything</option>
 		</select>
 
     <input type="submit" id = "searchButton" onclick="searchPoints();" value="Search by name"/>
@@ -70,7 +70,7 @@ function HookLeaflet_rsHomeFooterbottom() {
 
     //write query results in geoJSON format array
     while ($row = mysqli_fetch_assoc($result)) {
-            $to_geojson[] = array(
+           $to_geojson[] = array(
                 'type' => 'Feature',
                 'geometry' => array(
                     'type' => 'Point',
@@ -97,49 +97,64 @@ function HookLeaflet_rsHomeFooterbottom() {
     L.esri.basemapLayer('Streets').addTo(map);
 
     //add popups to map features
-    //<img src='http://45.55.57.30/resourcespace/filestore/" + feature.properties.path + "'"
+
     function onEachFeature(feature, layer) {
         var html = "<a href='http://45.55.57.30/resourcespace/plugins/leaflet_rs/pages/direct_view.php?ref=" + feature.properties.ref + "&researchID=" + feature.properties.researchID + "'><img src='http://45.55.57.30/resourcespace/filestore/" + feature.properties.path.substring(44) + "'" + "&size=thm' width=100 height=80 ></a>";
-        var facebookImage = "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/FB-f-Logo__blue_29.png' style='padding: 0px 4px 0px 0px; vertical-align: middle; width:16px; height:16px'>";
-        var instagramImage = "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/glyph-logo_May2016.png'style='padding: 4px 4px 0px 0px; vertical-align: bottom; width:16px; height:16px'>";
         if (feature.properties && feature.properties.name && feature.properties.ref) {
-          var twitterHandle;
-          var twitterImage;
-          var twitterLink;
           var twitterPopup;
-          var twitterPopup2;
+          var facebookPopup;
+          var instagramPopup;
+          //if Twitter, Facebook and/or Instagram accounts are provided, display links to them; otherwise display nothing
           if (feature.properties.twitter){
-            var twitterHandle = "@" + feature.properties.twitter;
-            var twitterImage = "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/Twitter_Social_Icon_Circle_Color.png' style='padding: 4px 4px 4px 0px; vertical-align: middle; width:16px; height:16px'>";
-            var twitterLink = "<a href='https://twitter.com/" + twitterHandle + "'style='font-size: 8px; margin-bottom:4px';>" + "@" + twitterHandle + "</a>";
             var twitterPopup = "<div style = 'padding:0px; margin:0px 0px 12px 0px; height: 10px; font-family:Helvetica Neue Pro; font-weight:bold';>"
             +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/Twitter_Social_Icon_Circle_Color.png' style='padding: 4px 4px 4px 0px; vertical-align: middle; width:16px; height:16px';>"
             + "<a href='https://twitter.com/" +
-             feature.properties.twitter + "'style='font-size: 8px';>" + "TwitterDev" + "</a></div>";
+             feature.properties.twitter + "'style='font-size: 8px';>" + "@" + feature.properties.twitter + "</a></div>";
           }
+
           else {
-            var twitterHandle = "TwitterDev";
+            // var twitterPopup = "";
             var twitterPopup = "<div style = 'padding:0px; margin:0px 0px 12px 0px; height: 10px; font-family:Helvetica Neue Pro; font-weight:bold';>"
             +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/Twitter_Social_Icon_Circle_Color.png' style='padding: 4px 4px 4px 0px; vertical-align: middle; width:16px; height:16px';>"
             + "<a href='https://twitter.com/" +
-             twitterHandle + "'style='font-size: 8px';>" + "TwitterDev" + "</a></div>";
-
+            "TwitterDev" + "'style='font-size: 8px';>" + "TwitterDev" + "</a></div>";
           }
 
-          //var twitterHandle = "TwitterDev";
-          var facebookName = "rachel.cohen.121";
-          var artistName = "Rachel Cohen";
-          var instagramName = "MannyPacquiao" ;
-          //when we have data in the database, these variables will come from feature.properties
-            var facebookLink = "<a href='https://www.facebook.com/" + facebookName + "'style='font-size: 8px';>" + artistName + "</a>";
-          var instagramLink = "<a href='https://www.instagram.com/" + instagramName + "/" + "'style='font-size: 8px';>" + instagramName + "</a>";
-          //layer.bindPopup(html);
-        layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />" +"<br />"+ html + "<br />"  + twitterPopup + "<div style = 'padding:0px; margin:0px; height:4px; font-family:Helvetica Neue Pro; font-weight:bold';>" + facebookImage +  facebookLink +  "</div>" + "<br />" + "<div style = 'padding:0px; margin:0px; height:4px; font-family:Helvetica Neue Pro; font-weight:bold';>" + instagramImage + instagramLink + "</div>" + "<br />");
+        if (feature.properties.facebook){
+            var facebookPopup = "<div style = 'padding:0px; margin:0px 0px 0px 0px; height: 4px; font-family:Helvetica Neue Pro; font-weight:bold';>"
+            +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/FB-f-Logo__blue_29.png' style='padding: 0px 4px 0px 0px; vertical-align: middle; width:16px; height:16px';>"
+            + "<a href='https://facebook.com/" +
+             feature.properties.facebook + "'style='font-size: 8px';>" + feature.properties.facebook + "</a></div>" + "<br/>";
+        }
+
+        else {
+        // var facebookPopup = "";
+          var facebookPopup = "<div style = 'padding:0px; margin:0px 0px 0px 0px; height: 4px; font-family:Helvetica Neue Pro; font-weight:bold';>"
+          +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/FB-f-Logo__blue_29.png' style='padding: 0px 4px 0px 0px; vertical-align: middle; width:16px; height:16px';>"
+          + "<a href='https://facebook.com/" +
+           "rachel.cohen.121" + "'style='font-size: 8px';>" + "Rachel Cohen" + "</a></div>" + "<br/>";
+        }
+
+        if (feature.properties.instagram){
+          var instagramPopup = "<div style = 'padding:0px; margin:0px 0px 0px 0px; height: 8px; font-family:Helvetica Neue Pro; font-weight:bold';>"
+          +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/glyph-logo_May2016.png' style='padding: 0px 4px 0px 0px; vertical-align: middle; width:16px; height:16px';>"
+          + "<a href='https://www.instagram.com/" +
+           feature.properties.instagram + "/" + "'style='font-size: 8px';>" + feature.properties.instagram + "</a></div>";
 
         }
-        // "<p style='font-size: 8px; margin:0; height: 0.5px; padding:0px'>" + twitterImage  + twitterLink + "</p>"
-        //"<span style='font-size: 8px; margin:0px; height: 0.5px; padding:0px'>"
-      //  +"<br />"+ html + "<br />" + "<p style='font-size: 8px; margin:4px; height: 0.5px; padding:4px'>" + twitterImage  + twitterLink + "</p>" + "<br />" + "<p style='font-size: 8px; margin: 0; height:0.5px; padding:4px'>" + facebookImage  + facebookLink + "</p>" + "<br />" + "<br />"+ "<p style='font-size: 8px; margin: 4px; height:0.5px; padding:4px'>" + instagramImage  + instagramLink +  +"</p>" +"<br />" + "test"
+
+        else {
+          //var instagramPopup = "";
+         var instagramPopup = "<div style = 'padding:0px; margin:0px 0px 0px 0px; height: 8px; font-family:Helvetica Neue Pro; font-weight:bold';>"
+          +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/glyph-logo_May2016.png' style='padding: 0px 4px 0px 0px; vertical-align: middle; width:16px; height:16px';>"
+          + "<a href='https://www.instagram.com/" +
+           "MannyPacquiao" + "/" + "'style='font-size: 8px';>" + "MannyPacquiao" + "</a></div>";
+        }
+
+        layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />" +"<br />"+ html + "<br />"  + twitterPopup + facebookPopup + instagramPopup + "<br />");
+
+        }
+
     };
 
     //format map markers
