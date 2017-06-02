@@ -1,8 +1,36 @@
 #leaflet_rs_map {
-    height: 180px;
-    width: 400px;
+    height: 550px;
+    width: 800px;
+    margin-left: 25%;
+    margin-right: 50%;
+    padding-top: 5px;
 }
 
-#test_header {
-  color: #0074D9;
+#Footer {
+  margin-bottom:20px;
+  padding:0;
+}
+
+#searchButton {
+    position:relative;
+    left: 45%;
+    top: 50%;
+    background-color: #4b4ba0;
+    border: none;
+    color: white;
+}
+
+#showAll {
+  position:relative;
+  left: 45%;
+  top: 50%;
+  background-color: #4b4ba0;
+  border: none;
+  color: white;
+}
+
+#nameSelect {
+  position:relative;
+  left: 45%;
+  top: 50%;
 }

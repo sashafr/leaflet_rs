@@ -1,14 +1,15 @@
 <?php
 function HookLeaflet_rsHomeAdditionalheaderjs() {
-    ?>
+?>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"  integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
 
-    <?php
+<?php
 }
+
 function HookLeaflet_rsHomeHomebeforepanels() {
-    ?>
+?>
 
     <style>
       #query {
@@ -25,18 +26,17 @@ function HookLeaflet_rsHomeHomebeforepanels() {
       }
     </style>
 
-    <div id="leaflet_rs_map"> </div>
+    <div id="leaflet_rs_map"></div>
 
     <select id = "nameSelect">
 		<option value="ace test">ace test</option>
     <option value="demo test">demo_test</option>
 		</select>
 
-		<input type="submit" onclick="searchPoints();" value="Search by name"/>
+    <input type="submit" id = "searchButton" onclick="searchPoints();" value="Search by name"/>
+    <input type = "button" id = "showAll" value = "Show all" onClick = "showAll();"/>
 
-    <input type = "button" value = "Show all" onClick = "showAll();"/>
-
-    <?php
+<?php
 }
 
 function HookLeaflet_rsHomeFooterbottom() {
@@ -53,12 +53,14 @@ function HookLeaflet_rsHomeFooterbottom() {
     //open connection to mySQL server
     $connection = mysqli_connect($host, $user, $pass, $database);
     if (!$connection) {
-        //die("Not connected : " . mysql_error());
         echo "Not connected : " . mysqli_connect_error();
     }
 
-    //query rows in resource table that have a lat and long
-    $query = 'SELECT ref, field8, geo_lat, geo_long FROM resource WHERE geo_lat != "NULL"';
+    //get resources with lat, long and researchID to add to map
+    $query = 'SELECT r.ref, r.field8 as title, r.geo_lat, r.geo_long, rd.value as researchID
+              FROM resource r
+              INNER JOIN resource_data rd ON r.ref=rd.resource
+              WHERE geo_lat != "NULL" and rd.resource_type_field = 88;';
 
     //query returns title, geo_lat, geo_long
     $result = mysqli_query($connection, $query);
@@ -75,13 +77,14 @@ function HookLeaflet_rsHomeFooterbottom() {
                     'coordinates' => [(float)$row["geo_long"], (float)$row["geo_lat"]]
                   ),
                 'properties' => array(
-                    'name' => $row["field8"],
-                    'ref' => $row["ref"]
+                    'name' => $row["title"],
+                    'ref' => $row["ref"],
+                    'researchID' => $row["researchID"],
+                    'path' => get_resource_path($row["ref"],true, "",true)
                     )
             );
     }
-
-    ?>
+?>
 
     <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
@@ -90,15 +93,53 @@ function HookLeaflet_rsHomeFooterbottom() {
     <script>
     //create map
     var map = L.map('leaflet_rs_map');
-
+    //add streets layer to map
     L.esri.basemapLayer('Streets').addTo(map);
 
     //add popups to map features
+    //<img src='http://45.55.57.30/resourcespace/filestore/" + feature.properties.path + "'"
     function onEachFeature(feature, layer) {
-        var html = "<a href='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" + feature.properties.ref + "'><img src='http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" + feature.properties.ref + "&size=thm' width=60 height=50 ></a>";
+        var html = "<a href='http://45.55.57.30/resourcespace/plugins/leaflet_rs/pages/direct_view.php?ref=" + feature.properties.ref + "&researchID=" + feature.properties.researchID + "'><img src='http://45.55.57.30/resourcespace/filestore/" + feature.properties.path.substring(44) + "'" + "&size=thm' width=100 height=80 ></a>";
+        var facebookImage = "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/FB-f-Logo__blue_29.png' style='padding: 0px 4px 0px 0px; vertical-align: middle; width:16px; height:16px'>";
+        var instagramImage = "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/glyph-logo_May2016.png'style='padding: 4px 4px 0px 0px; vertical-align: bottom; width:16px; height:16px'>";
         if (feature.properties && feature.properties.name && feature.properties.ref) {
-            layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />"  +"<br />"+ html, {maxWidth:60});
+          var twitterHandle;
+          var twitterImage;
+          var twitterLink;
+          var twitterPopup;
+          var twitterPopup2;
+          if (feature.properties.twitter){
+            var twitterHandle = "@" + feature.properties.twitter;
+            var twitterImage = "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/Twitter_Social_Icon_Circle_Color.png' style='padding: 4px 4px 4px 0px; vertical-align: middle; width:16px; height:16px'>";
+            var twitterLink = "<a href='https://twitter.com/" + twitterHandle + "'style='font-size: 8px; margin-bottom:4px';>" + "@" + twitterHandle + "</a>";
+            var twitterPopup = "<div style = 'padding:0px; margin:0px 0px 12px 0px; height: 10px; font-family:Helvetica Neue Pro; font-weight:bold';>"
+            +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/Twitter_Social_Icon_Circle_Color.png' style='padding: 4px 4px 4px 0px; vertical-align: middle; width:16px; height:16px';>"
+            + "<a href='https://twitter.com/" +
+             feature.properties.twitter + "'style='font-size: 8px';>" + "TwitterDev" + "</a></div>";
+          }
+          else {
+            var twitterHandle = "TwitterDev";
+            var twitterPopup = "<div style = 'padding:0px; margin:0px 0px 12px 0px; height: 10px; font-family:Helvetica Neue Pro; font-weight:bold';>"
+            +  "<img src = 'http://45.55.57.30/resourcespace/plugins/leaflet_rs/Twitter_Social_Icon_Circle_Color.png' style='padding: 4px 4px 4px 0px; vertical-align: middle; width:16px; height:16px';>"
+            + "<a href='https://twitter.com/" +
+             twitterHandle + "'style='font-size: 8px';>" + "TwitterDev" + "</a></div>";
+
+          }
+
+          //var twitterHandle = "TwitterDev";
+          var facebookName = "rachel.cohen.121";
+          var artistName = "Rachel Cohen";
+          var instagramName = "MannyPacquiao" ;
+          //when we have data in the database, these variables will come from feature.properties
+            var facebookLink = "<a href='https://www.facebook.com/" + facebookName + "'style='font-size: 8px';>" + artistName + "</a>";
+          var instagramLink = "<a href='https://www.instagram.com/" + instagramName + "/" + "'style='font-size: 8px';>" + instagramName + "</a>";
+          //layer.bindPopup(html);
+        layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />" +"<br />"+ html + "<br />"  + twitterPopup + "<div style = 'padding:0px; margin:0px; height:4px; font-family:Helvetica Neue Pro; font-weight:bold';>" + facebookImage +  facebookLink +  "</div>" + "<br />" + "<div style = 'padding:0px; margin:0px; height:4px; font-family:Helvetica Neue Pro; font-weight:bold';>" + instagramImage + instagramLink + "</div>" + "<br />");
+
         }
+        // "<p style='font-size: 8px; margin:0; height: 0.5px; padding:0px'>" + twitterImage  + twitterLink + "</p>"
+        //"<span style='font-size: 8px; margin:0px; height: 0.5px; padding:0px'>"
+      //  +"<br />"+ html + "<br />" + "<p style='font-size: 8px; margin:4px; height: 0.5px; padding:4px'>" + twitterImage  + twitterLink + "</p>" + "<br />" + "<p style='font-size: 8px; margin: 0; height:0.5px; padding:4px'>" + facebookImage  + facebookLink + "</p>" + "<br />" + "<br />"+ "<p style='font-size: 8px; margin: 4px; height:0.5px; padding:4px'>" + instagramImage  + instagramLink +  +"</p>" +"<br />" + "test"
     };
 
     //format map markers
@@ -135,11 +176,11 @@ function HookLeaflet_rsHomeFooterbottom() {
         searchBounds: bounds
     };
 
-    //Create geocoder
+    //create geocoder
     var searchControl = L.esri.Geocoding.geosearch(geoOptions).addTo(map);
     var results = L.layerGroup().addTo(map);
 
-    // listen for the results event and add every result to the map
+    //listen for the results event and add every result to the map
     searchControl.on("results", function(data) {
         results.clearLayers();
         for (var i = data.results.length - 1; i >= 0; i--) {
@@ -171,7 +212,6 @@ function HookLeaflet_rsHomeFooterbottom() {
         var latlngbounds = new L.latLngBounds(pointsLayer.getBounds());
         map.fitBounds(latlngbounds, {padding: [10, 10]});
     };
-
     </script>
 
 <?php
