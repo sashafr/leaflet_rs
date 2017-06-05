@@ -1,8 +1,13 @@
+<head>
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<div class="w3-bar">
+  <a href="http://45.55.57.30/resourcespace/pages/home.php" class="button">Back to Map</a>
+</div>
+</head>
+<body id="direct_view_page">
 <?php
 #get researchID from URL
 $researchID =  htmlspecialchars($_GET["researchID"]);
-echo 'ResearchID from URL: ', $researchID;
-echo '<br />'; echo '<br />';
 
 #get mysql access information from config.php
 include "/var/www/resourcespace/include/config.php";
@@ -32,15 +37,21 @@ if (!$result) {
 
 //print the metadata
 while ($row = mysqli_fetch_assoc($result)) {
-  foreach($row as $label => $data){
-      echo "<div id=\"metadata\">";
-      echo $label . ": " . $data;
-      echo "</div>";
-  }
-  //show the image using ref_urls
-  $imgref = $row['ref'];
-  echo "<div id=\"clickthru_img\">";
-  echo "<img src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "\" alt=\"Your Proposal Should Load Here\">";
-  echo '</div>';
+    echo "<div id=\"title\">";
+    echo $row['title'];
+    echo "</div>";
+    echo "<div id=\"metadata_container\">";
+    foreach($row as $label => $data){
+        if ($label != 'title' && $label != 'ref' && $label != 'researchID'){
+        echo "<span class=\"metadata_label\">" . ucfirst($label) . "</span><br/><span class=\"metadata\">" . $data . "</span><br/><br/>";
+        }
+    }
+    echo "</div>";
+    //show the image using ref_urls
+    $imgref = $row['ref'];
+    echo "<div id=\"clickthru_img\">";
+    echo "<img src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "\" alt=\"Your Proposal Should Load Here\">";
+    echo '</div>';
 }
 ?>
+</body>
