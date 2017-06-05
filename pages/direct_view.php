@@ -30,17 +30,17 @@ if (!$result) {
     echo "Invalid query: " . mysqli_error($connection);
 }
 
+//print the metadata
 while ($row = mysqli_fetch_assoc($result)) {
   foreach($row as $label => $data){
       echo "<div id=\"metadata\">";
       echo $label . ": " . $data;
       echo "</div>";
   }
-  #echo get_resource_path($row["ref"],true,"",true,'jpg');
+  //show the image using ref_urls
+  $imgref = $row['ref'];
+  echo "<div id=\"clickthru_img\">";
+  echo "<img src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "\" alt=\"Your Proposal Should Load Here\">";
+  echo '</div>';
 }
-
 ?>
-<br />
-<div id="clickthru_img">
-    <img src="http://45.55.57.30/resourcespace/filestore/" alt="Your Proposal Should Load Here">
-</div>
