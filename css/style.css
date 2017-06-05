@@ -13,7 +13,7 @@
 
 #searchButton {
     position:relative;
-    left: 45%;
+    left: 35%;
     top: 50%;
     background-color: #4b4ba0;
     border: none;
@@ -22,15 +22,43 @@
 
 #showAll {
   position:relative;
-  left: 45%;
+  left: 35%;
   top: 50%;
   background-color: #4b4ba0;
   border: none;
   color: white;
 }
 
-#nameSelect {
+#keywordSelect {
   position:relative;
-  left: 45%;
+
+  left: 35%;
   top: 50%;
+}
+
+#selector {
+
+  width: 170px;
+  display:inline-block;
+  position:relative;
+  left:35%;
+  top:50%;
+}
+
+#metadata {
+    display: inline-block;
+    width: 150px;
+    height: 75px;
+    margin: 10px;
+    border: 3px solid #73AD21;
+}
+
+
+
+#clickthru_img {
+  display: inline-block;
+  width: 150px;
+  height: 75px;
+  margin: 10px;
+  border: 3px solid #73AD21;
 }
