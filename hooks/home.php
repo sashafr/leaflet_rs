@@ -17,7 +17,7 @@ function HookLeaflet_rsHomeHomebeforepanels() {
     <option value="koala">koala</option>
     <option value="politicians ruin everything">politicians ruin everything</option>
     </select>
-    <input type="submit" id = "searchButton" onclick="searchPoints();" value="Search by name"/>
+    <input type="submit" id = "searchButton" onclick="searchPoints();" value="Search by keyword"/>
     <input type = "button" id = "showAll" value = "Show all" onClick = "showAll();"/>
 <?php
 } //end homebeforepanels hook
@@ -86,7 +86,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     //add popups to map features
 
     function onEachFeature(feature, layer) {
-        var html = "<a href='http://45.55.57.30/resourcespace/plugins/leaflet_rs/pages/direct_view.php?ref=" + feature.properties.ref + "&researchID=" + feature.properties.researchID + "'><img src='http://45.55.57.30/resourcespace/filestore/" + feature.properties.path.substring(44) + "'" + "&size=thm' width=100 height=80 ></a>";
+        var html = "<a href='http://45.55.57.30/resourcespace/plugins/leaflet_rs/pages/direct_view.php?ID=" + feature.properties.researchID + "'><img src='http://45.55.57.30/resourcespace/filestore/" + feature.properties.path.substring(44) + "'" + "&size=thm' width=100 height=80 ></a>";
         if (feature.properties && feature.properties.name && feature.properties.ref) {
             var twitterPopup;
             var facebookPopup;
@@ -126,6 +126,18 @@ function HookLeaflet_rsHomeFooterbottom() {
             }
 
             layer.bindPopup("<b>"+"NAME: "+"</b>"+ feature.properties.name + "<br />" +"<br />"+ html + "<br />"  + twitterPopup + facebookPopup + instagramPopup + "<br />");
+            //show just the monument name on mouseover
+            layer.on('mouseover', function(e) {
+              //open popup;
+              var popup = L.popup()
+              .setLatLng(e.latlng)
+              .setContent(feature.properties.name)
+              .openOn(map);
+              });
+              //close the popup on mouseout
+            //  layer.on('mouseout', function(event){
+              //  map.closePopup();
+              //});
         } //end outer if statement
     }; //end onEachFeature function
 
@@ -142,16 +154,20 @@ function HookLeaflet_rsHomeFooterbottom() {
     //get monument points from geojson array
     var jsonPts = <?php echo json_encode($to_geojson); ?>;
 
+
     //adds momuments to map
     var jsonLyr = L.geoJson(jsonPts, {
         onEachFeature: onEachFeature
         , pointToLayer: function (feature, latlng) {
         var marker = L.circleMarker(latlng, geojsonMarkerOptions);
+
         return marker;
         }
     });
     jsonLyr.addTo(map);
     map.fitBounds(jsonLyr.getBounds(), {padding: [10, 10]});
+
+
 
     //restrict geocoder searchBounds to the greater Philadelphia area
     var corner1 = L.latLng(40.11194, -75.30556);
@@ -185,11 +201,11 @@ function HookLeaflet_rsHomeFooterbottom() {
     //Select points by attribute
     function searchPoints(){
         var jsonLyr2 = jsonLyr;
-        var title = document.getElementById('keywordSelect').value;
+        var keyword = document.getElementById('keywordSelect').value;
         map.removeLayer(jsonLyr);
         pointsLayer.clearLayers();
         jsonLyr2.eachLayer(function(layer) {
-            if (layer.feature.properties.name == title) {
+            if (layer.feature.properties.name == keyword) {
                 pointsLayer.addLayer(layer);
                 map.addLayer(pointsLayer);
             }
@@ -206,7 +222,7 @@ function HookLeaflet_rsHomeFooterbottom() {
         //create div container
         var div = L.DomUtil.create('div', 'mySelector');
         //create select element within container (with id, so it can be populated later
-        div.innerHTML = '<select id="name_select"><option value="init">(select name)</option></select>';
+        div.innerHTML = '<select id="name_select"><option value="init">(select by name)</option></select>';
         return div;
     };
     selector.addTo(map);
