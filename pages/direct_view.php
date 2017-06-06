@@ -1,13 +1,13 @@
 <head>
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
 <div class="w3-bar">
-  <a href="http://45.55.57.30/resourcespace/pages/home.php" class="button">Back to Map</a>
+  <a id="home_button" href="http://45.55.57.30/resourcespace/pages/home.php" class="button">Back to Map</a>
 </div>
 </head>
 <body id="direct_view_page">
 <?php
 #get researchID from URL
-$researchID =  htmlspecialchars($_GET["researchID"]);
+$ID =  htmlspecialchars($_GET["ID"]);
 
 #get mysql access information from config.php
 include "/var/www/resourcespace/include/config.php";
@@ -23,11 +23,15 @@ if (!$connection) {
 }
 
 //get metadata for the resource with the researchID in the URL
-$query = 'SELECT r.ref, r.field8 as title, rd1.value as researchID, rd2.value as age, r.field3 as zipcode
+$query = 'SELECT r.ref, r.field8 as title, rd1.value as ID, credit, rd2.value as age, r.field3 as zipcode, twitter, facebook, instagram
           FROM resource r
           INNER JOIN resource_data rd1 ON r.ref=rd1.resource
           INNER JOIN resource_data rd2 ON rd1.resource=rd2.resource
-          WHERE rd1.resource_type_field = 88 and rd1.value = ' . $researchID . ' and rd2.resource_type_field = 89;';
+          LEFT JOIN (select resource, value as twitter from resource_data where resource_type_field = 84) as rd3 on rd2.resource = rd3.resource
+          LEFT JOIN (select resource, value as facebook from resource_data where resource_type_field = 85) as rd4 on rd2.resource = rd4.resource
+          LEFT JOIN (select resource, value as instagram from resource_data where resource_type_field = 85) as rd5 on rd2.resource = rd5.resource
+          LEFT JOIN (select resource, value as credit from resource_data where resource_type_field = 10) as rd6 on rd2.resource = rd6.resource
+          WHERE rd1.resource_type_field = 88 and rd1.value = ' . $ID . ' and rd2.resource_type_field = 89;';
 
 //query returns title, researchID, age, zipcode
 $result = mysqli_query($connection, $query);
@@ -42,7 +46,10 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo "</div>";
     echo "<div id=\"metadata_container\">";
     foreach($row as $label => $data){
-        if ($label != 'title' && $label != 'ref' && $label != 'researchID'){
+        if (in_array($label, array("twitter", "facebook", "instagram")) && !empty($data)){
+        echo "<span class=\"metadata_label\">" . ucfirst($label) . "</span><br/><a id=\"social_metadata\" href=\"https://www." . $label . ".com/" . $data . "\" target=\"_blank\">" . $data . "</a><br/><br/>";
+        }
+        elseif (!in_array($label, array('title','ref','twitter','facebook','instagram')) && !empty($data)){
         echo "<span class=\"metadata_label\">" . ucfirst($label) . "</span><br/><span class=\"metadata\">" . $data . "</span><br/><br/>";
         }
     }
