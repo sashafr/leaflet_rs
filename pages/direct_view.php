@@ -1,7 +1,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
 <div class="w3-bar">
-    <a id="home_button" href="http://45.55.57.30/resourcespace/pages/home.php" class="button">Back to Map</a>
+    <a id="home_button" href="http://45.55.57.30/resourcespace/pages/home.php" class="button">View Map</a>
 </div>
 </head>
 <body id="direct_view_page">
@@ -39,22 +39,25 @@ $query = "SELECT r.ref, r.field8 as title, rd1.value as ID, credit, rd2.value as
           LEFT JOIN (select resource, value as facebook from resource_data where resource_type_field = 85) as rd4 on rd2.resource = rd4.resource
           LEFT JOIN (select resource, value as instagram from resource_data where resource_type_field = 85) as rd5 on rd2.resource = rd5.resource
           LEFT JOIN (select resource, value as credit from resource_data where resource_type_field = 10) as rd6 on rd2.resource = rd6.resource
-          WHERE rd1.resource_type_field = 88 and rd1.value = '" . $ID . "' and rd2.resource_type_field = 89;";
+          WHERE rd1.resource_type_field = 88 and rd1.value = '" . $ID . "' and rd2.resource_type_field = 89 and r.ref > 0;";
 
 //query returns title, researchID, age, zipcode
 $result = mysqli_query($connection, $query);
 
 //error message if debugging
-/*
-if (!$result) {
+/*if (!$result) {
     echo "Invalid query: " . mysqli_error($connection);
-}
-*/
+} */
 
 //error message for user if ID isn't in database
 if(mysqli_num_rows($result) == 0){
     echo "<br />";
     echo "<h1 class=\"error_message\">This resource may still be processing. Explore the map on the home page and check back soon!</h2><br />";
+}
+
+//if there were two files with the same research ID, display the first one
+if(mysqli_num_rows($result) > 1){
+    $result = $result[0];
 }
 
 //print the metadata
