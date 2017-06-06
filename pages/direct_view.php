@@ -1,11 +1,18 @@
 <head>
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
 <div class="w3-bar">
-  <a id="home_button" href="http://45.55.57.30/resourcespace/pages/home.php" class="button">Back to Map</a>
+    <a id="home_button" href="http://45.55.57.30/resourcespace/pages/home.php" class="button">Back to Map</a>
 </div>
 </head>
 <body id="direct_view_page">
+
 <?php
+if(empty($_REQUEST['ID'])){
+    echo "<br /><h1 class=\"error_message\">There appears to be an error in your URL. The correct form is: </h2>";
+    echo "<br /><h2 class=\"error_message\">.../pages/direct_view.php?ID=<span style=\"color:blue\">*Insert Your Research ID Number Here*</span></h2>";
+}
+
+else{
 #get researchID from URL
 $ID =  htmlspecialchars($_GET["ID"]);
 
@@ -31,12 +38,22 @@ $query = 'SELECT r.ref, r.field8 as title, rd1.value as ID, credit, rd2.value as
           LEFT JOIN (select resource, value as facebook from resource_data where resource_type_field = 85) as rd4 on rd2.resource = rd4.resource
           LEFT JOIN (select resource, value as instagram from resource_data where resource_type_field = 85) as rd5 on rd2.resource = rd5.resource
           LEFT JOIN (select resource, value as credit from resource_data where resource_type_field = 10) as rd6 on rd2.resource = rd6.resource
-          WHERE rd1.resource_type_field = 88 and rd1.value = ' . $ID . ' and rd2.resource_type_field = 89;';
+          WHERE rd1.resource_type_field = 88 and rd1.value = \"' . $ID . '\" and rd2.resource_type_field = 89;';
 
 //query returns title, researchID, age, zipcode
 $result = mysqli_query($connection, $query);
+
+//error message if debugging
+/*
 if (!$result) {
     echo "Invalid query: " . mysqli_error($connection);
+}
+*/
+
+//error message for user
+if(empty($result)){
+    echo "<br />";
+    echo "<h1 class=\"error_message\">This resource may still be processing. Explore the map on the home page and check back soon!</h2><br />";
 }
 
 //print the metadata
@@ -60,5 +77,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo "<img src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "\" alt=\"Your Proposal Should Load Here\">";
     echo '</div>';
 }
+} //end else
 ?>
 </body>
