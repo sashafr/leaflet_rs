@@ -70,10 +70,10 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo "<div class=\"w3-container w3-quarter w3-center w3-mobile\" id=\"metadata_container\">";
     foreach($row as $label => $data){
         if (in_array($label, array("twitter", "facebook", "instagram")) && !empty($data)){
-        echo "<span class=\"metadata_label\">" . ucfirst($label) . "</span><br/><a id=\"social_metadata\" href=\"https://www." . $label . ".com/" . $data . "\" target=\"_blank\">" . $data . "</a><br/><br/>";
+        echo "<p class=\"metadata_label\">" . ucfirst($label) . "</p><a id=\"social_metadata\" href=\"https://www." . $label . ".com/" . $data . "\" target=\"_blank\">@" . $data . "</a>";
         }
         elseif (!in_array($label, array('title','ref','twitter','facebook','instagram')) && !empty($data)){
-        echo "<span class=\"metadata_label\">" . ucfirst($label) . "</span><br/><span class=\"metadata\">" . $data . "</span><br/><br/>";
+        echo "<p class=\"metadata_label\">" . ucfirst($label) . "</p><p class=\"metadata\">" . $data . "</p>";
         }
     }
     echo "</div>";
@@ -83,10 +83,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $src = "http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "&size=scr";
     if (@getimagesize($src)) {
-        echo "<img src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "&size=scr\" alt=\"This image may no longer exist.\">";
+        echo "<img id=\"proposal_img\" src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "&size=scr\" alt=\"This image may no longer exist.\">";
     }
     else{
-        echo "<img src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "\" alt=\"This image may no longer exist\">";
+        echo "<img id=\"proposal_img\" src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "\" alt=\"This image may no longer exist\">";
     }
     echo '</div>';
     echo '</div>'; //end w3 row
