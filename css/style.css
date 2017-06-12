@@ -1,4 +1,4 @@
-/*HEADER FOR ALL RESOURCESPACE PAGES*/
+/*RESOURCESPACE STYLE OVERWRITES - HEADER AND FOOTER ON ALL PAGES*/
 
 #TextHeader a:link,
 #TextHeader a:visited {
@@ -47,44 +47,35 @@
 #HeaderNav2 a:active {
     text-transform: uppercase;
     color: #4b4ba0;
-    font-family: sans-serif ;
+    font-family: sans-serif;
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 1.5px;
     }
 
-/*EDIT ICONS*/
+#Footer {clear: both; margin:20px 20px 20px 20px;padding:0;text-align:left;}
+#FooterNavRight {float:right;text-align:right;margin-top: 10px;clear: right;}
+#FooterNavRightBottom {float:right;text-align:right;margin-top: 10px;clear: right;}
+#FooterNavLeft {float:left;text-align:left;margin-top: 10px;}
+#FooterLanguages {margin-left:15px;}
 
-#ResourceToolsContainer i.fa.fa-pencil {
-    color: #fbaf3f;
-    font-size: 50px;
-    }
+/*EDIT ICONS RESOURCESPACE STYLE OVERWRITES*/
+
+#ResourceToolsContainer i.fa.fa-pencil {color: #fbaf3f; font-size: 50px;}
 
 .ResourcePanelIcons a:link[title="Edit resource"],
-.ResourcePanelIcons a:visited[title="Edit resource"]{
-    color: #fbaf3f;
-    font-size: 35px;
-    }
+.ResourcePanelIcons a:visited[title="Edit resource"]{color: #fbaf3f; font-size: 35px;}
 
-#GeolocationData i.fa.fa-caret-right {
-    color: #fbaf3f;
-    font-size: 30px;
-    }
-
+#GeolocationData i.fa.fa-caret-right {color: #fbaf3f; font-size: 30px;}
 #GeolocationData a:link,
-#GeolocationData a:visited {
-    color: #fbab3f;
-    font-size: 30px;
-    font-weight: bold;
-    }
+#GeolocationData a:visited {color: #fbab3f; font-size: 30px; font-weight: bold;}
 
 /*HOME PAGE*/
+/*resourcespace style overwrites*/
+#searchspace {background-color: #4b4ab0;}
+.HomePicturePanel {margin:0px 0px 0px 0px;float: left;width: 0px; height: 0px;}
 
-#searchspace {
-    background-color: #4b4ab0;
-    }
-
-
+/*leaflet_rs styles*/
 #leaflet_rs_map {
     box-sizing: border-box;
     height: 600px;
@@ -95,21 +86,19 @@
     border-top-width: 5px;
     border-right-width: 5px;
     border-bottom-width: 5px;
-    /*height: 550px;
-    width: 800px;
-    */
     }
 
 #showAll {
-    background-color: #737373;
-    color: white;
+    background-color: #CCCCCC;
+    color: #555;
     font-family: sans-serif;
     font-size: 20px;
+    font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
     }
 
-#name_select {
+.selector {
     font-size: 14px;
     font-family: sans-serif;
     letter-spacing: 1px;
@@ -117,79 +106,10 @@
     background-color: #FFFFFF;
     font-weight: bold;
     color: #737373;
-    /*background-color: #5C5857;
-    color: white; */
     }
 
-#zip_select{
-    font-size: 14px;
-    font-family: sans-serif;
-    letter-spacing: 1px;
-    border: 2px solid #CCCCCC;
-    background-color: #FFFFFF;
-    color: #737373;
-    font-weight: bold;
-    /*background-color: #5C5857;
-    color: white;*/
-    }
-
-#keywordSelect {
-    height: 27px;
-    font-size: 14px;
-    font-family: sans-serif;
-    letter-spacing: 1px;
-    /*background-color: #5C5857;
-    color: white;*/
-    }
-/*this is the keyword search button*/
-#searchButton {
-    font-size: 14px;
-    font-family: sans-serif;
-    letter-spacing: 2px;
-    background-color: #737373;
-    color: white;
-    text-transform: uppercase;
-    }
-
-/*
-#keywordBigDiv {
-    display: inline-block;
-    background-color:#5C5857;
-    border: 2px solid black;
-    }
-
-#selector {
-    width: 170px;
-    display:inline-block;
-    position:relative;
-    background-color: #5C5857;
-    }
-
-#zipcodeSelector {
-    font-size: 10px;
-    display: inline-block;
-    position: relative;
-    }
- */
-
-.error_message {
-    position: relative;
-    font-family: sans-serif;
-    font-size: 18px;
-    color: #4b4ba0;
-    }
-
-.leaflet-popup-content-wrapper {
-    background-color: #2e3c43;
-    /*background-color: #5C5857;*/
-    color: white;
-    font-family: sans-serif;
-    }
-
-.leaflet-popup-tip {
-    background-color: #2e3c43;
-    /*background-color: #5C5857;*/
-    }
+.leaflet-popup-content-wrapper {background-color: #2e3c43; color: white; font-family: sans-serif;}
+.leaflet-popup-tip {background-color: #2e3c43;}
 
 .social_icon {
     vertical-align: middle;
@@ -200,23 +120,11 @@
     margin-bottom: 12px;
     }
 
-.HomePicturePanel {margin:0px 0px 0px 0px;float: left;width: 0px; height: 0px;}
+/*DIRECT VIEW PAGE - leaflet_rs styles*/
 
-#Footer {clear: both; margin:20px 20px 20px 20px;padding:0;text-align:left;}
-#FooterNavRight {float:right;text-align:right;margin-top: 10px;clear: right;}
-#FooterNavRightBottom {float:right;text-align:right;margin-top: 10px;clear: right;}
-#FooterNavLeft {float:left;text-align:left;margin-top: 10px;}
-#FooterLanguages{margin-left:15px;}
+#direct_view_page {background-color: #FFFFFF;}
 
-/*DIRECT VIEW PAGE*/
-
-#direct_view_page {
-    background-color: #FFFFFF;
-    }
-
-#navbar {
-    background-color: #fbaf3f
-    }
+#navbar {background-color: #fbaf3f}
 
 #home_button {
     text-decoration: none;
@@ -237,64 +145,26 @@
     font-family: sans-serif;
     font-weight: bold;
     color: #2e3c43;
-    /*color: #4b4ba0;*/
     letter-spacing: .5px;
     padding-top: 1px;
-    /*font-size: 40px;
-    text-align: center;*/
     }
 
-#metadata_container{
+#metadata_container {
     box-sizing: border-box;
     font-size: 24px;
     font-family: sans-serif;
     color: #2e3c43;
-    /*color: #4b4ba0;*/
     letter-spacing: 1px;
-    /*height: 200px;
-    width: 200px;
-    display: inline-block;
-    position: absolute;*/
     }
 
-.metadata_label {
-    font-weight:bold;
-    text-transform: uppercase;
-    margin-top: 24px;
-    margin-bottom: 0px;
-    }
-
-.metadata {
-    margin-top: 0px;
-    }
+.metadata_label {font-weight:bold; text-transform: uppercase; margin-top: 24px; margin-bottom: 0px;}
+.metadata {margin-top: 0px;}
 
 #social_metadata:link,
-#social_metadata:visited {
-    color: #4b4ba0;
-    text-decoration: none;
-    margin-top: 0px;
-    }
+#social_metadata:visited {color: #4b4ba0; text-decoration: none; margin-top: 0px;}
+#social_metadata:hover,
+#social_metadata:active {color: #0000EE; text-decoration: none;}
 
-#social_metadata:hover {
-    color: #0000EE;
-    text-decoration: none;
-    }
 
-#social_metadata:active {
-    color: #0000EE;
-    text-decoration: none;
-    }
-
-#clickthru_img {
-    box-sizing: border-box;
-    /*width: 100vw;
-    display: inline-block;*/
-    }
-
-#proposal_img {
-    border: solid #4b4ba0;
-    border-left-width: 5px;
-    border-top-width: 5px;
-    border-right-width: 5px;
-    border-bottom-width: 5px;
-    }
+#proposal_img_container {box-sizing: border-box;}
+#proposal_img {border: solid #4b4ba0; border-width: 5px;}
