@@ -38,7 +38,7 @@ $query = "SELECT r.ref, r.field8 as title, rd1.value as ID, credit, age, r.field
           LEFT JOIN (select resource, value as age from resource_data where resource_type_field = 89) as rd2 on rd1.resource = rd2.resource
           LEFT JOIN (select resource, value as twitter from resource_data where resource_type_field = 84) as rd3 on rd1.resource = rd3.resource
           LEFT JOIN (select resource, value as facebook from resource_data where resource_type_field = 85) as rd4 on rd1.resource = rd4.resource
-          LEFT JOIN (select resource, value as instagram from resource_data where resource_type_field = 85) as rd5 on rd1.resource = rd5.resource
+          LEFT JOIN (select resource, value as instagram from resource_data where resource_type_field = 86) as rd5 on rd1.resource = rd5.resource
           LEFT JOIN (select resource, value as credit from resource_data where resource_type_field = 10) as rd6 on rd1.resource = rd6.resource
           WHERE rd1.resource_type_field = 88 and rd1.value = '" . $ID . "' and r.ref > 0;";
 
@@ -79,7 +79,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo "</div>";
     //show the image using ref_urls
     $imgref = $row['ref'];
-    echo "<div class=\"w3-container w3-threequarter w3-mobile\" id=\"clickthru_img\">";
+    echo "<div class=\"w3-container w3-threequarter w3-mobile\" id=\"proposal_img_container\">";
 
     $src = "http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "&size=scr";
     if (@getimagesize($src)) {
