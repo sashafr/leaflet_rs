@@ -19,13 +19,13 @@ function HookLeaflet_rsHomeHomebeforepanels() {
         </div>
     </div>
 
-    <div id="showall_container" class="w3-row w3-mobile">
+    <div id="footerBar" class="w3-row w3-mobile">
         <div class="w3-center">
-        <br \>
-        <input class="w3-button w3-large w3-round" type = "button" id = "showAll" value = "Show all" onClick = "showAll();"/>
+        <img class="logo w3-mobile" src="../plugins/leaflet_rs/assets/ML_social-sharing.jpg" width = "100"/>
+        <img class="logo w3-mobile" src="../plugins/leaflet_rs/assets/mural_arts_logo.svg" width = "140"/>
+        <img class="logo w3-mobile" src="../plugins/leaflet_rs/assets/pricelab_logo.png" width = "100"/>
         </div>
     </div>
-
 <?php
 } //end homebeforepanels hook
 
@@ -81,6 +81,7 @@ function HookLeaflet_rsHomeFooterbottom() {
                 'facebook' => $row["facebook"],
                 'instagram' => $row["instagram"],
                 'keywordArray' => explode(', ',  $row["keywords"]),
+                'uppercaseName' => ucfirst(str_replace(['"', '\''], "", $row["title"])),
                 'path' => get_resource_path($row["ref"],true, "",true),
                 )
         );
@@ -120,6 +121,11 @@ function HookLeaflet_rsHomeFooterbottom() {
         }
     });
 
+    //creates a layer group of the neighborhoods layer and monument points
+    //Used by the selectors to remove and redraw points
+    var group = new L.LayerGroup(jsonLyr, neighborhoodsLayer);
+    map.addLayer(group);
+
     //----------------------------MONUMENTS-------------------------------------
     //get monument points from geojson array
     var jsonPts = <?php echo json_encode($to_geojson); ?>;
@@ -143,8 +149,8 @@ function HookLeaflet_rsHomeFooterbottom() {
 
     //------------------------------POP-UPS-------------------------------------
     function onEachFeature(feature, layer) {
-        var html = "<a href='http://45.55.57.30/resourcespace/plugins/leaflet_rs/pages/direct_view.php?ID=" + feature.properties.researchID +
-            "'><img src='http://45.55.57.30/resourcespace/filestore/" + feature.properties.path.substring(44) + "'" + "&size=thm' width=100 height=80 ></a>";
+        var html = "<a href='../plugins/leaflet_rs/pages/direct_view.php?ID=" + feature.properties.researchID +
+            "'><img src='../filestore/" + feature.properties.path.substring(44) + "'" + "&size=thm' width=100 height=80 ></a>";
         var agePopup = "", zipcodePopup = "", socialMediaPopup = "";
         if (feature.properties && feature.properties.name && feature.properties.ref) {
             if (feature.properties.age){
@@ -155,28 +161,28 @@ function HookLeaflet_rsHomeFooterbottom() {
             }
             if (feature.properties.twitter) {
                 socialMediaPopup = socialMediaPopup + "<a href='https://twitter.com/" + feature.properties.twitter +
-                "'><img class='social_icon' src ='http://45.55.57.30/resourcespace/plugins/leaflet_rs/assets/Twitter_Social_Icon_Circle_White.png'></a>";
+                "'><img class='social_icon' src ='../plugins/leaflet_rs/assets/Twitter_Social_Icon_Circle_White.png'></a>";
             }
             if (feature.properties.instagram) {
                 socialMediaPopup = socialMediaPopup + "<a href='https://www.instagram.com/" + feature.properties.instagram +
-                "'><img class='social_icon' src ='http://45.55.57.30/resourcespace/plugins/leaflet_rs/assets/white_glyph-logo_May2016.png'></a>";
+                "'><img class='social_icon' src ='../plugins/leaflet_rs/assets/white_glyph-logo_May2016.png'></a>";
             }
             if (feature.properties.facebook) {
                 socialMediaPopup = socialMediaPopup + "<a href='https://facebook.com/" + feature.properties.facebook +
-                "'><img class='social_icon' src ='http://45.55.57.30/resourcespace/plugins/leaflet_rs/assets/FB-f-Logo__white_29.png'></a>";
+                "'><img class='social_icon' src ='../plugins/leaflet_rs/assets/FB-f-Logo__white_29.png'></a>";
             }
             layer.bindPopup("<span style='font-family:sans-serif; font-size: 14px; letter-spacing:1px'><b>TITLE: </b>" + feature.properties.name + "<br />" +
-                agePopup + zipcodePopup + "</span>" + "<br />" + html + "<br />"  + socialMediaPopup + "<br />");
+                agePopup + zipcodePopup + "</span>" + "<br />" + html + "<br />"  + socialMediaPopup + "<br />", {autoClose: false});
 
             //uncomment this section for mouseover popups with momument title
             //show just the monument name on mouseover
-            /*layer.on('mouseover', function(e) {
+            layer.on('mouseover', function(e) {
                 //open popup;
                 var popup = L.popup()
                 .setLatLng(e.latlng)
                 .setContent("<div style = 'font-family:sans-serif; letter-spacing:1px; font-weight:bold';>" + feature.properties.name + "</div>")
                 .openOn(map);
-            }); */
+            });
         }
     };
 
@@ -197,7 +203,17 @@ function HookLeaflet_rsHomeFooterbottom() {
         }
     });
 
-    //---------------------SHOW ALL BUTTON FUNCTION-----------------------------
+    //-------------------------SHOW ALL BUTTON ---------------------------------
+    var allSelector = L.control();
+    allSelector.onAdd = function(map) {
+        //create div container
+        var div = L.DomUtil.create('div', 'mySelector4');
+        //create select element within container (with id, so it can be populated later
+        div.innerHTML = '<input class="w3-button w3-large w3-round" type="button" id="showAll" value="Show all" onClick="showAll();"/></div>';
+        return div;
+    };
+    allSelector.addTo(map);
+
     function showAll(){
         jsonLyr.addTo(map);
         map.fitBounds(neighborhoodsLayer.getBounds(), {padding: [10, 10]});
@@ -208,38 +224,31 @@ function HookLeaflet_rsHomeFooterbottom() {
         }
     };
 
-    var group = new L.LayerGroup(jsonLyr, neighborhoodsLayer);
-    map.addLayer(group);
-
-
-
     //--------------------------TITLE SELECTOR----------------------------------
     //create selector that will populate dynamically
-    var selector = L.control({position: 'bottomright'});
-    selector.onAdd = function(map) {
+    var titleSelector = L.control({position: 'bottomright'});
+    titleSelector.onAdd = function(map) {
         //create div container
         var div = L.DomUtil.create('div', 'mySelector');
         //create select element within container (with id, so it can be populated later
         div.innerHTML = '<select id="name_select" class="selector"><option value="init">(select by title)</option></select>';
         return div;
     };
-    selector.addTo(map);
+    titleSelector.addTo(map);
 
     //make list of titles
-    var myList = [];
+    var titleList = [];
     jsonLyr.eachLayer(function(layer) {
-        myList.push(layer.feature.properties.name);
+        titleList.push(layer.feature.properties.uppercaseName);
     });
-    //sort dropdown list
-    /*var lowerCase = myList.toLowerCase();
-    var sortedList = myList.map(function(value){
-    return value.toLowerCase();
-    }).sort(); */
-    sortedList = myList.sort();
-    //put list in selector dropdown
-    for (var i = 0; i < sortedList.length; i++) {
+    sortedTitles = titleList.sort();
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    for (var i = 0; i < sortedTitles.length; i++) {
         var optionElement = document.createElement("option");
-        optionElement.innerHTML = sortedList[i];
+        var capitalizeFirst = capitalizeFirstLetter(sortedTitles[i]);
+        optionElement.innerHTML = capitalizeFirst;
         L.DomUtil.get("name_select").appendChild(optionElement);
     }
     var name_select = L.DomUtil.get("name_select");
@@ -252,7 +261,9 @@ function HookLeaflet_rsHomeFooterbottom() {
     L.DomEvent.addListener(name_select, 'change', changeHandler);
     //when a name is selected, open that monument's popup
     function changeHandler(e) {
-        searchPoints("name_select", 'layer.feature.properties.name');
+        searchPoints("name_select", "layer.feature.properties.uppercaseName");
+        document.querySelector("#zip_select").selectedIndex = 0;
+        document.querySelector("#key_select").selectedIndex = 0;
     }
 
     //-------------------------ZIPCODE SELECTOR---------------------------------
@@ -298,6 +309,8 @@ function HookLeaflet_rsHomeFooterbottom() {
     //when a zipcode is selected, remove all other points
     function changeHandler2() {
       searchPoints("zip_select", 'layer.feature.properties.zipcode');
+      document.querySelector("#name_select").selectedIndex = 0;
+      document.querySelector("#key_select").selectedIndex = 0;
     }
 
     //-------------------------KEYWORD SELECTOR---------------------------------
@@ -330,6 +343,8 @@ function HookLeaflet_rsHomeFooterbottom() {
     L.DomEvent.addListener(key_select, 'change', changeHandler3);
     function changeHandler3(e) {
         selectKeywords();
+        document.querySelector("#name_select").selectedIndex = 0;
+        document.querySelector("#zip_select").selectedIndex = 0;
     }
 
     //----------FUNCTIONS EXECUTED ON SELECTOR DROPDOWN CLICKS------------------
@@ -356,7 +371,7 @@ function HookLeaflet_rsHomeFooterbottom() {
         map.removeLayer(group);
         jsonLyr2.eachLayer(function(layer) {
             property2 = eval(property);
-            if (property2 == keyword) {
+            if (property2.toString() === keyword.toString()) {
                 map.removeLayer(jsonLyr);
                 pointsLayer.addLayer(layer);
                 map.addLayer(pointsLayer);
