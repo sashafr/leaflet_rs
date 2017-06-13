@@ -1,5 +1,4 @@
 /*RESOURCESPACE STYLE OVERWRITES - HEADER AND FOOTER ON ALL PAGES*/
-
 #TextHeader a:link,
 #TextHeader a:visited {
     color: #4b4ba0;
@@ -10,7 +9,7 @@
     top: 7px;
     left: 5px;
     letter-spacing: 4px;
-    }
+}
 
 #HeaderNav1 a:link,
 #HeaderNav1 a:visited {
@@ -20,7 +19,7 @@
     font-weight: 300;
     letter-spacing: 2px;
     text-transform: uppercase;
-    }
+}
 
 #HeaderNav1 a:hover,
 #HeaderNav1 a:active {
@@ -30,8 +29,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: bold;
-    }
-
+}
 
 #HeaderNav2 a:link,
 #HeaderNav2 a:visited {
@@ -41,7 +39,7 @@
     font-weight: 300;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    }
+}
 
 #HeaderNav2 a:hover,
 #HeaderNav2 a:active {
@@ -51,16 +49,9 @@
     font-size: 16px;
     font-weight: bold;
     letter-spacing: 1.5px;
-    }
-
-#Footer {clear: both; margin:20px 20px 20px 20px;padding:0;text-align:left;}
-#FooterNavRight {float:right;text-align:right;margin-top: 10px;clear: right;}
-#FooterNavRightBottom {float:right;text-align:right;margin-top: 10px;clear: right;}
-#FooterNavLeft {float:left;text-align:left;margin-top: 10px;}
-#FooterLanguages {margin-left:15px;}
+}
 
 /*EDIT ICONS RESOURCESPACE STYLE OVERWRITES*/
-
 #ResourceToolsContainer i.fa.fa-pencil {color: #fbaf3f; font-size: 50px;}
 
 .ResourcePanelIcons a:link[title="Edit resource"],
@@ -72,13 +63,72 @@
 
 /*HOME PAGE*/
 /*resourcespace style overwrites*/
-#searchspace {background-color: #4b4ab0;}
+/*keep search box on top bar up to 2500px*/
+@media(max-width:8000px) {
+    .ResponsiveSimpleSearch {text-align: left; display: inline-block; margin: 10px;}
+    #SearchBox {float:none; display:inline-block; width:100%; margin:0;}
+    #searchbutton, #ssearchbox {margin:0;}
+    #SearchBoxPanel {width: auto; text-align: center;}
+    #SearchBoxPanel .SearchItem, #SearchBoxPanel .ui-widget {display:inline-block; margin:0;}
+    #searchspace {padding: 0;}
+    #Rssearchexpand {border: none; width: 0px; height:0px;}
+    /*#Rssearchexpand {width:122px;}*/
+    .ResponsiveSimpleSearch .searchbutton {display: inline-block; margin: 5px !important; height: 35px; width: 85px;}
+    .ResponsiveSimpleSearch .tick {display:inline-block; margin-top:3px;}
+    .ResponsiveSimpleSearch #ssearchbox {display: inline-block; margin: 5px; height: 25px; padding:3px; border-radius: 5px; line-height:1em; font-size:1em;}
+    #CentralSpaceContainer {padding:0;}
+    #SearchBarContainer br {display:none;}
+    #SearchBarContainer a {font-size:1em;}
+    .ResponsiveSimpleSearch p {margin: 10px 0;}
+    .ResponsiveSimpleSearch .StarRatings {text-align: center; display: inline-block; width: 130px;}
+    /* Show Responsive Bar */
+    #SearchBoxPanel input, #SearchBoxPanel label, #SearchBoxPanel h2, #SearchBoxPanel .SearchItem, #SearchBoxPanel .StarRatings, #SearchBoxPanel #searchbarrt, #SearchBoxPanel p {display:none;}
+    #SearchBoxPanel #ssearchbox, #SearchBoxPanel #simplesearchbuttons, #SearchBoxPanel #searchbutton, #SearchBoxPanel #Rssearchexpand {display:inline-block!important;}
+    /* Show Full Bar when clicked */
+    #SearchBoxPanel .ResponsiveSimpleSearch h2, #SearchBoxPanel .ResponsiveSimpleSearch .SearchItem, #SearchBoxPanel .ResponsiveSimpleSearch #searchbarrt {display:block;}
+    #SearchBoxPanel .ResponsiveSimpleSearch input, #SearchBoxPanel .ResponsiveSimpleSearch label, #SearchBoxPanel .ResponsiveSimpleSearch .StarRatings, #SearchBoxPanel .ResponsiveSimpleSearch p{display:inline-block;}
+    /* LoginBoxPanel*/
+    #SearchBoxPanel.LoginBoxPanel input, #SearchBoxPanel.LoginBoxPanel .SearchItem, #SearchBoxPanel.LoginBoxPanel p {display:inline-block;}
+    #SearchBoxPanel.LoginBoxPanel input {margin-left:15px;}
+    .LoginBoxPanel {margin-top:8px;}
+}
+
+#SearchBarContainer {margin-top: 0px;  background-color: #FFFFFF;}
+.SearchSpace {background-color: #FFFFFF;}
 .HomePicturePanel {margin:0px 0px 0px 0px;float: left;width: 0px; height: 0px;}
+#Rssearchexpand {display:none!important; border:none; width:0px; padding:0px;}
+#ssearchbox {border: 2px solid #555;}
+
+#searchbutton {
+    background-color: #555;
+    color: #FFF;
+    border: 2px solid #555;
+    font-family: sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 250px;
+}
+
+#searchbutton:hover {
+    background-color: #4b4ba0;
+    color: #FFF;
+    border: 2px solid #4b4ba0;
+    font-family: sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 250px;
+}
 
 /*leaflet_rs styles*/
+#map_container {padding-bottom:500px;}
+
 #leaflet_rs_map {
     box-sizing: border-box;
-    height: 600px;
+    height: 100vh;
+    min-height: 500px;
+    max-height: calc(90vh - 200px);
     width: 100vw;
     max-width: 1000px;
     border: solid #4b4ba0;
@@ -86,17 +136,22 @@
     border-top-width: 5px;
     border-right-width: 5px;
     border-bottom-width: 5px;
-    }
+}
 
 #showAll {
-    background-color: #CCCCCC;
-    color: #555;
+    background-color: #FFFFFF;
+    color: #737373;
+    border: 2px solid #CCCCCC;
     font-family: sans-serif;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
-    }
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
 
 .selector {
     font-size: 14px;
@@ -106,7 +161,7 @@
     background-color: #FFFFFF;
     font-weight: bold;
     color: #737373;
-    }
+}
 
 .leaflet-popup-content-wrapper {background-color: #2e3c43; color: white; font-family: sans-serif;}
 .leaflet-popup-tip {background-color: #2e3c43;}
@@ -118,10 +173,25 @@
     margin-top: 24px;
     margin-right: 18px;
     margin-bottom: 12px;
-    }
+}
+
+#footerBar {
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    height: 500px;
+    padding: 1rem;
+    background-color: #FFFFFF;
+}
+
+.logo {
+    display: inline-block;
+    margin-left: 30px;
+    height: auto;
+    vertical-align: middle;
+}
 
 /*DIRECT VIEW PAGE - leaflet_rs styles*/
-
 #direct_view_page {background-color: #FFFFFF;}
 
 #navbar {background-color: #fbaf3f}
@@ -139,7 +209,7 @@
     text-decoration: none;
     display: inline-block;
     text-transform: uppercase;
-    }
+}
 
 #title {
     font-family: sans-serif;
@@ -147,7 +217,7 @@
     color: #2e3c43;
     letter-spacing: .5px;
     padding-top: 1px;
-    }
+}
 
 #metadata_container {
     box-sizing: border-box;
@@ -155,16 +225,15 @@
     font-family: sans-serif;
     color: #2e3c43;
     letter-spacing: 1px;
-    }
+}
 
-.metadata_label {font-weight:bold; text-transform: uppercase; margin-top: 24px; margin-bottom: 0px;}
+.metadata_label {font-weight: bold; text-transform: uppercase; margin-top: 24px; margin-bottom: 0px;}
 .metadata {margin-top: 0px;}
 
 #social_metadata:link,
 #social_metadata:visited {color: #4b4ba0; text-decoration: none; margin-top: 0px;}
 #social_metadata:hover,
 #social_metadata:active {color: #0000EE; text-decoration: none;}
-
 
 #proposal_img_container {box-sizing: border-box;}
 #proposal_img {border: solid #4b4ba0; border-width: 5px;}
