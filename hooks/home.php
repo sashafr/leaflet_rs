@@ -1,36 +1,68 @@
 <?php
+
 function HookLeaflet_rsHomeAdditionalheaderjs() {
+
+
 ?>
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"  integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin=""/>
-    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
-    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
-    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="../plugins/leaflet_rs/neighborhoods.js"></script>
+
+<!--W3 STYLEHEET -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<!--NEIGHBORHOODS LAYER -->
+<script src="http://45.55.57.30/resourcespace/plugins/leaflet_rs/neighborhoods.js"></script>
+
+
+<!--LEAFLET LIBRARIES -->
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"  integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin=""/>
+
+<!--ESRI LEAFLET LIBRARIES-->
+<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
+<script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+<script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
+
+
+<!-- MARKER CLUSTER LIBRARIES -->
+<link rel="stylesheet" href="http://45.55.57.30/resourcespace/plugins/leaflet_rs/MarkerCluster.css" />
+<link rel="stylesheet" href="http://45.55.57.30/resourcespace/plugins/leaflet_rs/MarkerCluster.Default.css" />
+<script src="http://45.55.57.30/resourcespace/plugins/leaflet_rs/leaflet.markercluster-src.js"></script>
+<script src="http://45.55.57.30/resourcespace/plugins/leaflet_rs/leaflet.markercluster.js"></script>
+
+
 <?php
+
 } //end additionalheaderjs hook
 
 function HookLeaflet_rsHomeHomebeforepanels() {
+
+
 ?>
     <div class="w3-row w3-col" style="width:100%">
         <div id="map_container" class="w3-content w3-mobile">
         <div id="leaflet_rs_map"></div>
         </div>
     </div>
-
-    <div id="footerBar" class="w3-row w3-mobile">
-        <div class="w3-center">
-        <img class="logo w3-mobile" src="../plugins/leaflet_rs/assets/ML_social-sharing.jpg" width = "100"/>
-        <img class="logo w3-mobile" src="../plugins/leaflet_rs/assets/mural_arts_logo.svg" width = "140"/>
-        <img class="logo w3-mobile" src="../plugins/leaflet_rs/assets/pricelab_logo.png" width = "100"/>
-        </div>
-    </div>
 <?php
+    include "/var/www/resourcespace/include/config.php";
+    echo '<div id = "footerBar" class = "w3-row w3-mobile">
+        <div class = "w3-center">
+        <a href = "http://monumentlab.muralarts.org">
+        <img class="logo w3-mobile" src= "' . $baseurl . '/plugins/leaflet_rs/assets/ML_social-sharing.jpg" width = "100"/>
+        </a>
+        <a href = "https://www.muralarts.org/">
+        <img class = "logo w3-mobile" src="' . $baseurl . '/plugins/leaflet_rs/assets/mural_arts_logo.svg" width = "280"/>
+        </a>
+        <a href = "https://pricelab.sas.upenn.edu/">
+        <img class = "logo w3-mobile" src="' . $baseurl .'/plugins/leaflet_rs/assets/pricelab_logo.png" width = "140"/>
+        </a>
+        </div>
+    </div>';
 } //end homebeforepanels hook
 
 function HookLeaflet_rsHomeFooterbottom() {
     //database configuration information -- from var/www/resourcespace/include/config.php
+
+
     include "/var/www/resourcespace/include/config.php";
     $host = $mysql_server;
     $user = $mysql_username;
@@ -87,7 +119,13 @@ function HookLeaflet_rsHomeFooterbottom() {
         );
     }
 ?>
+
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
+
     <script>
+
     //--------------------------------MAP---------------------------------------
     var map = L.map('leaflet_rs_map');
 
@@ -137,15 +175,22 @@ function HookLeaflet_rsHomeFooterbottom() {
         weight: 1,
         fillOpacity: 1
     };
+    var markers =   new L.markerClusterGroup();
+    var selectedMarkers = new L.markerClusterGroup();
+    var markersList = [];
     //adds momuments to map
     var jsonLyr = L.geoJson(jsonPts, {
         onEachFeature: onEachFeature
         , pointToLayer: function (feature, latlng) {
+        //  layer.bindPopup(feature.properties.name);
         var marker = L.circleMarker(latlng, geojsonMarkerOptions);
         return marker;
         }
     });
-    jsonLyr.addTo(map);
+
+    markers.addLayer(jsonLyr);
+		markers.addTo(map);
+    //jsonLyr.addTo(map);
 
     //------------------------------POP-UPS-------------------------------------
     function onEachFeature(feature, layer) {
@@ -187,23 +232,33 @@ function HookLeaflet_rsHomeFooterbottom() {
     };
 
     //----------------------------GEOCODER--------------------------------------
-    var searchControl = L.esri.Geocoding.geosearch(geoOptions).addTo(map);
-    var results = L.layerGroup().addTo(map);
+
     //restrict geocoder searchBounds to the greater Philadelphia area
     var corner1 = L.latLng(40.11194, -75.30556);
     var corner2 = L.latLng(39.84556, -74.95556);
+    var markerOptions = {
+      color: "#737373"
+    };
     bounds = L.latLngBounds(corner1, corner2);
     var geoOptions = {title: "Search Location", searchBounds: bounds};
+    var searchControl = L.esri.Geocoding.geosearch(geoOptions).addTo(map);
+    var results = L.layerGroup().addTo(map);
 
     //listen for the results event and add every result to the map
     searchControl.on("results", function(data) {
         results.clearLayers();
         for (var i = data.results.length - 1; i >= 0; i--) {
-            results.addLayer(L.marker(data.results[0].latlng));
+           results.addLayer(L.marker(data.results[0].latlng, markerOptions));
         }
     });
 
+    //Remove geocoder results if the user clicks elsewhere
+    L.DomEvent.addListener(map, 'click', function(e) {
+        results.clearLayers();
+    });
+
     //-------------------------SHOW ALL BUTTON ---------------------------------
+
     var allSelector = L.control();
     allSelector.onAdd = function(map) {
         //create div container
@@ -215,7 +270,9 @@ function HookLeaflet_rsHomeFooterbottom() {
     allSelector.addTo(map);
 
     function showAll(){
-        jsonLyr.addTo(map);
+        selectedMarkers.clearLayers();
+      //  jsonLyr.addTo(map);
+        markers.addTo(map);
         map.fitBounds(neighborhoodsLayer.getBounds(), {padding: [10, 10]});
         //reset dropdown to default text
         var dropdowns = document.querySelectorAll(".selector")
@@ -241,7 +298,9 @@ function HookLeaflet_rsHomeFooterbottom() {
     jsonLyr.eachLayer(function(layer) {
         titleList.push(layer.feature.properties.uppercaseName);
     });
+    //sort dropdown list
     sortedTitles = titleList.sort();
+    //put list in selector dropdown
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -349,17 +408,22 @@ function HookLeaflet_rsHomeFooterbottom() {
 
     //----------FUNCTIONS EXECUTED ON SELECTOR DROPDOWN CLICKS------------------
     var pointsLayer = new L.FeatureGroup(); //selected points
+
     function selectKeywords() {
         var keyword = document.getElementById('key_select').value;
         var jsonLyr2 = jsonLyr;
         map.removeLayer(jsonLyr);
+        map.removeLayer(markers);
+        selectedMarkers.clearLayers();
         pointsLayer.clearLayers();
         map.removeLayer(group);
         jsonLyr2.eachLayer(function(layer) {
         if (isInArray(keyword, layer.feature.properties.keywordArray) == true) {
             map.removeLayer(jsonLyr);
+            //map.removeLayer(selectedMarkers);
             pointsLayer.addLayer(layer);
-            map.addLayer(pointsLayer);
+            selectedMarkers.addLayer(pointsLayer);
+            map.addLayer(selectedMarkers);
         }
         });
     }
@@ -367,6 +431,8 @@ function HookLeaflet_rsHomeFooterbottom() {
         var jsonLyr2 = jsonLyr;
         var keyword = document.getElementById(elementID).value;
         map.removeLayer(jsonLyr);
+        map.removeLayer(markers);
+        selectedMarkers.clearLayers();
         pointsLayer.clearLayers();
         map.removeLayer(group);
         jsonLyr2.eachLayer(function(layer) {
@@ -374,7 +440,8 @@ function HookLeaflet_rsHomeFooterbottom() {
             if (property2.toString() === keyword.toString()) {
                 map.removeLayer(jsonLyr);
                 pointsLayer.addLayer(layer);
-                map.addLayer(pointsLayer);
+                selectedMarkers.addLayer(pointsLayer);
+                map.addLayer(selectedMarkers);
             }
        });
     };
