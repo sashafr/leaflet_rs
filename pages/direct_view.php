@@ -18,7 +18,7 @@ else {
 $ID =  htmlspecialchars($_GET["ID"]);
 
 #get mysql access information from config.php
-include "/var/www/resourcespace/include/config.php";
+include "../../../include/config.php";
 $host = $mysql_server;
 $user = $mysql_username;
 $pass = $mysql_password;
@@ -64,32 +64,26 @@ if(mysqli_num_rows($result) > 1){
 //print the metadata
 while ($row = mysqli_fetch_assoc($result)) {
     echo "<header class=\"w3-container w3-center w3-mobile\"><h1 id=\"title\">";
-    echo $row['title'];
+        echo $row['title'];
     echo "</h1></header><br/>";
     echo "<div class=\"w3-row-padding\">"; //start w3-row for metadata and image
-    echo "<div class=\"w3-container w3-quarter w3-center w3-mobile\" id=\"metadata_container\">";
-    foreach($row as $label => $data){
-        if (in_array($label, array("twitter", "facebook", "instagram")) && !empty($data)){
-        echo "<p class=\"metadata_label\">" . ucfirst($label) . "</p><a id=\"social_metadata\" href=\"https://www." . $label . ".com/" . $data . "\" target=\"_blank\">@" . $data . "</a>";
+        echo "<div class=\"w3-container w3-quarter w3-center w3-mobile\" id=\"metadata_container\">";
+        foreach($row as $label => $data){
+            if (in_array($label, array("twitter", "facebook", "instagram")) && !empty($data)){
+            echo "<p class=\"metadata_label\">" . ucfirst($label) . "</p><a id=\"social_metadata\" href=\"https://www." . $label . ".com/" . $data . "\" target=\"_blank\">@" . $data . "</a>";
+            }
+            elseif (!in_array($label, array('title','ref','twitter','facebook','instagram')) && !empty($data)){
+            echo "<p class=\"metadata_label\">" . ucfirst($label) . "</p><p class=\"metadata\">" . $data . "</p>";
+            }
         }
-        elseif (!in_array($label, array('title','ref','twitter','facebook','instagram')) && !empty($data)){
-        echo "<p class=\"metadata_label\">" . ucfirst($label) . "</p><p class=\"metadata\">" . $data . "</p>";
-        }
-    }
-    echo "</div>";
-    //show the image using ref_urls
-    $imgref = $row['ref'];
-    echo "<div class=\"w3-container w3-threequarter w3-mobile\" id=\"proposal_img_container\">";
+        echo "</div>";
 
-    $src = "http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "&size=scr";
-    if (@getimagesize($src)) {
-        echo "<img id=\"proposal_img\" src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "&size=scr\" alt=\"This image may no longer exist.\">";
-    }
-    else{
-        echo "<img id=\"proposal_img\" src=\"http://45.55.57.30/resourcespace/plugins/ref_urls/file.php?ref=" . $imgref . "\" alt=\"This image may no longer exist\">";
-    }
-    echo '</div>';
-    echo '</div>'; //end w3 row
+        //show the image
+        $imgref = $row['ref'];
+        echo "<div class=\"w3-container w3-threequarter w3-mobile\" id=\"proposal_img_container\">";
+        echo "<img id=\"proposal_img\" src=\"http://45.55.57.30/resourcespace/pages/download.php?ref=".$imgref."\" alt=\"This image is not currently available.\">";
+        echo "</div>";
+    echo "</div>"; //end w3 row
 }
 } //end else
 ?>
