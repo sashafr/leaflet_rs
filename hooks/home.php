@@ -28,15 +28,15 @@ function HookLeaflet_rsHomeHomebeforepanels() {
     </div>
 
     <!-- This div is where selectors and buttons go if not on the map -->
-    <div class="w3-row">
+    <div class="w3-row" style="width = 100%">
         <div id="selector_container" class="w3-center w3-mobile">
             <div id="keywordSelector"></div>
         </div>
-    </div>';
+    </div>
     <?php
     include "/var/www/resourcespace/include/config.php";
-    echo '<div id = "footerBar" class = "w3-row">
-        <div class = "w3-content">
+    echo '<div id = "footerBar" class = "w3-row w3-center" style="width = 100%">
+        <div>
             <a href = "http://monumentlab.muralarts.org">
             <img class="logo w3-mobile" src= "' . $baseurl . '/plugins/leaflet_rs/assets/ML_social-sharing.jpg" width = "100"/>
             </a>
@@ -226,7 +226,7 @@ function HookLeaflet_rsHomeFooterbottom() {
       color: "#737373"
     };
     bounds = L.latLngBounds(corner1, corner2);
-    var geoOptions = {title: "Search Location", searchBounds: bounds, expanded:true, collapseAfterResult: false};
+    var geoOptions = {title: "Search Location", position: 'bottomright', searchBounds: bounds, expanded:true, collapseAfterResult: false};
     var searchControl = L.esri.Geocoding.geosearch(geoOptions).addTo(map);
     var results = L.layerGroup().addTo(map);
 
