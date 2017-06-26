@@ -6,9 +6,9 @@
     font-size: 24px;
     font-weight: bold;
     position: relative;
-    top: 7px;
     left: 5px;
     letter-spacing: 4px;
+    margin-right: 100px;
 }
 
 #HeaderNav1 a:link,
@@ -23,11 +23,6 @@
 
 #HeaderNav1 a:hover,
 #HeaderNav1 a:active {
-    color: #4b4ba0;
-    font-family: sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
     font-weight: bold;
 }
 
@@ -43,27 +38,72 @@
 
 #HeaderNav2 a:hover,
 #HeaderNav2 a:active {
-    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* leaflet_rs submissions dropdown on nav bar */
+#submissions_dropdown {
+  display:none;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+}
+
+.dropdown {
+    position: relative;
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+    position: relative;
+    background-color: white;
+    color: gray;
+    width: 25%;
+    float: right;
+    z-index: 100;
+    border: 1px solid black;
+}
+
+#submissionsButton {
     color: #4b4ba0;
+    border-color: rgba(0,0,0,0);
+    background-color: rgba(0,0,0,0);
+    box-shadow: none;
+    text-transform: uppercase;
     font-family: sans-serif;
     font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.dropdown_option {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    line-height: 150%;
+}
+
+.show {
+    display:block
 }
 
 /*EDIT ICONS RESOURCESPACE STYLE OVERWRITES*/
+/* pencil icons */
 #ResourceToolsContainer i.fa.fa-pencil {color: #fbaf3f; font-size: 50px;}
-
 .ResourcePanelIcons a:link[title="Edit resource"],
 .ResourcePanelIcons a:visited[title="Edit resource"]{color: #fbaf3f; font-size: 35px;}
-
+/* add/edit location label */
 #GeolocationData i.fa.fa-caret-right {color: #fbaf3f; font-size: 30px;}
 #GeolocationData a:link,
 #GeolocationData a:visited {color: #fbab3f; font-size: 30px; font-weight: bold;}
 
-/*HOME PAGE*/
-/*resourcespace style overwrites*/
-/*keep search box on top bar up to 2500px*/
+/* HOME PAGE */
+/* resourcespace style overwrites */
+/* keep search box on top bar for all common screen sizes */
 @media(max-width:8000px) {
     .ResponsiveSimpleSearch {text-align: left; display: inline-block; margin: 10px;}
     #SearchBox {float:none; display:inline-block; width:100%; margin:0;}
@@ -97,45 +137,39 @@
 .SearchSpace {background-color: #FFFFFF;}
 .HomePicturePanel {margin:0px 0px 0px 0px;float: left;width: 0px; height: 0px;}
 #Rssearchexpand {display:none!important; border:none; width:0px; padding:0px;}
-#ssearchbox {border: 2px solid #555;}
+#ssearchbox {border: 1px solid #555; border-radius: 5px;}
 
 #searchbutton {
-    background-color: #555;
+    background-color: #737373;
     color: #FFF;
-    border: 2px solid #555;
+    border: 2px solid #FFF;
     font-family: sans-serif;
     font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
     width: 250px;
+    border-radius: 5px;
+    text-align: center;
 }
 
 #searchbutton:hover {
     background-color: #4b4ba0;
-    color: #FFF;
     border: 2px solid #4b4ba0;
-    font-family: sans-serif;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    width: 250px;
 }
 
 /*leaflet_rs styles*/
-#map_container {padding-bottom:500px;}
+#home_leaflet_rs_container {height: 100%; padding-bottom: 100px;}
+#map_container {padding-bottom: 30px; width: 90vw;}
 
 #leaflet_rs_map {
     box-sizing: border-box;
-    height: 100vh;
+    height: 90vh;
     min-height: 500px;
     max-height: calc(90vh - 200px);
-    width: 100vw;
+    width: 90vw;
     max-width: 1000px;
     border: solid #4b4ba0;
-    border-left-width: 5px;
-    border-top-width: 5px;
-    border-right-width: 5px;
-    border-bottom-width: 5px;
+    border-width: 5px;
 }
 
 #showAll {
@@ -153,11 +187,14 @@
     padding-right: 8px;
 }
 
+#selector_container {margin-bottom: 20px;}
+
 .selector {
     font-size: 14px;
     font-family: sans-serif;
     letter-spacing: 1px;
     border: 2px solid #CCCCCC;
+    border-radius: 5px;
     background-color: #FFFFFF;
     font-weight: bold;
     color: #737373;
@@ -176,12 +213,10 @@
 }
 
 #footerBar {
-    position: absolute;
     bottom: 0;
-    width:100%;
-    height: 500px;
-    padding: 1rem;
-    background-color: #FFFFFF;
+    width: 100%;
+    height:100px;
+    margin-top: 30px;
 }
 
 .logo {
@@ -193,9 +228,9 @@
 
 /*DIRECT VIEW PAGE - leaflet_rs styles*/
 #direct_view_page {background-color: #FFFFFF;}
-
 #navbar {background-color: #fbaf3f}
 
+/* view map button */
 #home_button {
     text-decoration: none;
     background-color: #fbaf3f;
@@ -225,6 +260,27 @@
     font-family: sans-serif;
     color: #2e3c43;
     letter-spacing: 1px;
+    height: 75vh;
+}
+
+#transcriptButton {
+  color: #2e3c43;
+  border-color: rgba(0,0,0,0);
+  background-color: rgba(0,0,0,0);
+  box-shadow: none;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#transcription {
+  color: #2e3c43;
+  font-family: sans-serif;
+  font-size: 20px;
+  letter-spacing: 0px;
 }
 
 .metadata_label {font-weight: bold; text-transform: uppercase; margin-top: 24px; margin-bottom: 0px;}
@@ -235,5 +291,5 @@
 #social_metadata:hover,
 #social_metadata:active {color: #0000EE; text-decoration: none;}
 
-#proposal_img_container {box-sizing: border-box;}
-#proposal_img {border: solid #4b4ba0; border-width: 5px;}
+#proposal_img_container {box-sizing: border-box; width: 50vw;}
+#proposal_img {border: solid #4b4ba0; border-width: 5px; width: 50vw;}
