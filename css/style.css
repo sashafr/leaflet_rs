@@ -42,32 +42,6 @@
 }
 
 /* leaflet_rs submissions dropdown on nav bar */
-#submissions_dropdown {
-  display:none;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: lowercase;
-}
-
-.dropdown {
-    position: relative;
-    display: block;
-}
-
-.dropdown-content {
-    display: none;
-    font-size: 16px;
-    letter-spacing: 1px;
-    text-transform: lowercase;
-    position: relative;
-    background-color: white;
-    color: gray;
-    width: 25%;
-    float: right;
-    z-index: 100;
-    border: 1px solid black;
-}
-
 #submissionsButton {
     color: #4b4ba0;
     border-color: rgba(0,0,0,0);
@@ -80,15 +54,27 @@
     letter-spacing: 2px;
 }
 
+#submissions_dropdown {
+    display:none;
+    letter-spacing: 2px;
+    text-transform: lowercase;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+    position: relative;
+    background-color: white;
+    color: gray;
+    width: 25%;
+    float: right;
+    z-index: 100;
+    border: 1px solid #737373;
+}
+
 .dropdown_option {
     font-size: 12px;
     letter-spacing: 1px;
     text-transform: capitalize;
     line-height: 150%;
-}
-
-.show {
-    display:block
 }
 
 /*EDIT ICONS RESOURCESPACE STYLE OVERWRITES*/
