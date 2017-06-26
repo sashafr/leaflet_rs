@@ -174,3 +174,11 @@ depending on where they navigate from. In this case it is strongly recommended t
 configure the loading box text as indicated above from "Please wait..." to
 "Please refresh" as the page will never finish loading and there is nothing for
 the user to wait for.
+
+HARDCODED URLS/FILE PATHS
+Current leaflet_rs files that include hardcoded URLs or filepaths that need to
+be updated when the
+installation changes or migrates:
+- pages/direct_view.php
+- hooks/home.php
+- hooks/all.php
