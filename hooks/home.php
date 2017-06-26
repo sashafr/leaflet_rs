@@ -1,68 +1,60 @@
 <?php
-
 function HookLeaflet_rsHomeAdditionalheaderjs() {
-
-
 ?>
-
-<!--W3 STYLEHEET -->
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-<!--NEIGHBORHOODS LAYER -->
-<script src="http://45.55.57.30/resourcespace/plugins/leaflet_rs/neighborhoods.js"></script>
-
-
-<!--LEAFLET LIBRARIES -->
-<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"  integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin=""/>
-
-<!--ESRI LEAFLET LIBRARIES-->
-<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
-<script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
-<script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
-
-
-<!-- MARKER CLUSTER LIBRARIES -->
-<link rel="stylesheet" href="http://45.55.57.30/resourcespace/plugins/leaflet_rs/MarkerCluster.css" />
-<link rel="stylesheet" href="http://45.55.57.30/resourcespace/plugins/leaflet_rs/MarkerCluster.Default.css" />
-<script src="http://45.55.57.30/resourcespace/plugins/leaflet_rs/leaflet.markercluster-src.js"></script>
-<script src="http://45.55.57.30/resourcespace/plugins/leaflet_rs/leaflet.markercluster.js"></script>
-
-
+    <!--W3 STYLEHEET -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!--NEIGHBORHOODS LAYER -->
+    <script src="../plugins/leaflet_rs/js/neighborhoods.js"></script>
+    <!--LEAFLET LIBRARIES -->
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js" integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg==" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"  integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ==" crossorigin=""/>
+    <!--ESRI LEAFLET LIBRARIES-->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
+    <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
+    <!-- MARKER CLUSTER LIBRARIES -->
+    <link rel="stylesheet" href="../plugins/leaflet_rs/css/MarkerCluster.css" />
+    <link rel="stylesheet" href="../plugins/leaflet_rs/css/MarkerCluster.Default.css" />
+    <script src="../plugins/leaflet_rs/js/leaflet.markercluster-src.js"></script>
+    <script src="../plugins/leaflet_rs/js/leaflet.markercluster.js"></script>
 <?php
-
 } //end additionalheaderjs hook
 
 function HookLeaflet_rsHomeHomebeforepanels() {
-
-
 ?>
-    <div class="w3-row w3-col" style="width:100%">
-        <div id="map_container" class="w3-content w3-mobile">
+    <div id ="home_leaflet_rs_container">
+    <div id="map_container" class="w3-content w3-mobile">
         <div id="leaflet_rs_map"></div>
-        </div>
     </div>
-<?php
-    include "/var/www/resourcespace/include/config.php";
-    echo '<div id = "footerBar" class = "w3-row w3-mobile">
-        <div class = "w3-center">
-        <a href = "http://monumentlab.muralarts.org">
-        <img class="logo w3-mobile" src= "' . $baseurl . '/plugins/leaflet_rs/assets/ML_social-sharing.jpg" width = "100"/>
-        </a>
-        <a href = "https://www.muralarts.org/">
-        <img class = "logo w3-mobile" src="' . $baseurl . '/plugins/leaflet_rs/assets/mural_arts_logo.svg" width = "280"/>
-        </a>
-        <a href = "https://pricelab.sas.upenn.edu/">
-        <img class = "logo w3-mobile" src="' . $baseurl .'/plugins/leaflet_rs/assets/pricelab_logo.png" width = "140"/>
-        </a>
+
+    <!-- This div is where selectors and buttons go if not on the map -->
+    <div class="w3-row">
+        <div id="selector_container" class="w3-center w3-mobile">
+            <div id="keywordSelector"></div>
         </div>
     </div>';
+    <?php
+    include "/var/www/resourcespace/include/config.php";
+    echo '<div id = "footerBar" class = "w3-row">
+        <div class = "w3-content">
+            <a href = "http://monumentlab.muralarts.org">
+            <img class="logo w3-mobile" src= "' . $baseurl . '/plugins/leaflet_rs/assets/ML_social-sharing.jpg" width = "100"/>
+            </a>
+            <a href = "https://www.muralarts.org/">
+            <img class = "logo w3-mobile" src="' . $baseurl . '/plugins/leaflet_rs/assets/mural_arts_logo.svg" width = "280"/>
+            </a>
+            <a href = "https://pricelab.sas.upenn.edu/">
+            <img class = "logo w3-mobile" src="' . $baseurl .'/plugins/leaflet_rs/assets/pricelab_logo.png" width = "140"/>
+            </a>
+        </div>
+    </div>';
+    ?>
+    </div>
+<?php
 } //end homebeforepanels hook
 
 function HookLeaflet_rsHomeFooterbottom() {
     //database configuration information -- from var/www/resourcespace/include/config.php
-
-
     include "/var/www/resourcespace/include/config.php";
     $host = $mysql_server;
     $user = $mysql_username;
@@ -118,14 +110,13 @@ function HookLeaflet_rsHomeFooterbottom() {
                 )
         );
     }
-?>
-
+    ?>
+    <!--GEOCODER LIBRARIES-->
     <script src="https://unpkg.com/esri-leaflet@2.0.8"></script>
     <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.4/dist/esri-leaflet-geocoder.css">
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.4"></script>
 
     <script>
-
     //--------------------------------MAP---------------------------------------
     var map = L.map('leaflet_rs_map');
 
@@ -160,7 +151,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     });
 
     //creates a layer group of the neighborhoods layer and monument points
-    //Used by the selectors to remove and redraw points
+    //used by the selectors to remove and redraw points
     var group = new L.LayerGroup(jsonLyr, neighborhoodsLayer);
     map.addLayer(group);
 
@@ -175,22 +166,19 @@ function HookLeaflet_rsHomeFooterbottom() {
         weight: 1,
         fillOpacity: 1
     };
-    var markers =   new L.markerClusterGroup();
+    var markers =   new L.markerClusterGroup({showCoverageOnHover: false});
     var selectedMarkers = new L.markerClusterGroup();
     var markersList = [];
     //adds momuments to map
     var jsonLyr = L.geoJson(jsonPts, {
         onEachFeature: onEachFeature
         , pointToLayer: function (feature, latlng) {
-        //  layer.bindPopup(feature.properties.name);
         var marker = L.circleMarker(latlng, geojsonMarkerOptions);
         return marker;
         }
     });
-
     markers.addLayer(jsonLyr);
-		markers.addTo(map);
-    //jsonLyr.addTo(map);
+	markers.addTo(map);
 
     //------------------------------POP-UPS-------------------------------------
     function onEachFeature(feature, layer) {
@@ -219,8 +207,7 @@ function HookLeaflet_rsHomeFooterbottom() {
             layer.bindPopup("<span style='font-family:sans-serif; font-size: 14px; letter-spacing:1px'><b>TITLE: </b>" + feature.properties.name + "<br />" +
                 agePopup + zipcodePopup + "</span>" + "<br />" + html + "<br />"  + socialMediaPopup + "<br />", {autoClose: false});
 
-            //uncomment this section for mouseover popups with momument title
-            //show just the monument name on mouseover
+            //mouseover popups with momument title
             layer.on('mouseover', function(e) {
                 //open popup;
                 var popup = L.popup()
@@ -232,7 +219,6 @@ function HookLeaflet_rsHomeFooterbottom() {
     };
 
     //----------------------------GEOCODER--------------------------------------
-
     //restrict geocoder searchBounds to the greater Philadelphia area
     var corner1 = L.latLng(40.11194, -75.30556);
     var corner2 = L.latLng(39.84556, -74.95556);
@@ -240,7 +226,7 @@ function HookLeaflet_rsHomeFooterbottom() {
       color: "#737373"
     };
     bounds = L.latLngBounds(corner1, corner2);
-    var geoOptions = {title: "Search Location", searchBounds: bounds};
+    var geoOptions = {title: "Search Location", searchBounds: bounds, expanded:true, collapseAfterResult: false};
     var searchControl = L.esri.Geocoding.geosearch(geoOptions).addTo(map);
     var results = L.layerGroup().addTo(map);
 
@@ -257,8 +243,7 @@ function HookLeaflet_rsHomeFooterbottom() {
         results.clearLayers();
     });
 
-    //-------------------------SHOW ALL BUTTON ---------------------------------
-
+    //-------------------------SHOW ALL BUTTON----------------------------------
     var allSelector = L.control();
     allSelector.onAdd = function(map) {
         //create div container
@@ -270,8 +255,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     allSelector.addTo(map);
 
     function showAll(){
-        selectedMarkers.clearLayers();
-      //  jsonLyr.addTo(map);
+        map.removeLayer(selectedMarkers);
         markers.addTo(map);
         map.fitBounds(neighborhoodsLayer.getBounds(), {padding: [10, 10]});
         //reset dropdown to default text
@@ -281,9 +265,14 @@ function HookLeaflet_rsHomeFooterbottom() {
         }
     };
 
+    //-------------------FUNCTION FOR POPULATING SELECTORS----------------------
+    function isInArray(value, array) {
+        return array.indexOf(value) > -1;
+    }
+
     //--------------------------TITLE SELECTOR----------------------------------
     //create selector that will populate dynamically
-    var titleSelector = L.control({position: 'bottomright'});
+/*  var titleSelector = L.control({position: 'bottomright'});
     titleSelector.onAdd = function(map) {
         //create div container
         var div = L.DomUtil.create('div', 'mySelector');
@@ -324,10 +313,10 @@ function HookLeaflet_rsHomeFooterbottom() {
         document.querySelector("#zip_select").selectedIndex = 0;
         document.querySelector("#key_select").selectedIndex = 0;
     }
-
+*/
     //-------------------------ZIPCODE SELECTOR---------------------------------
     //create selector by zip code
-    var zipcodeSelector = L.control({position: 'bottomright'});
+/*  var zipcodeSelector = L.control({position: 'bottomright'});
     zipcodeSelector.onAdd = function(map) {
         //create div container
         var div2 = L.DomUtil.create('div', 'mySelector2');
@@ -348,9 +337,8 @@ function HookLeaflet_rsHomeFooterbottom() {
         }
     });
     //check to see if the item is already in the list
-    function isInArray(value, array) {
-        return array.indexOf(value) > -1;
-    }
+
+
     var sortedZipList = myZipList.sort();
     //add the items in the sorted list into the selector
     for (var i = 0; i < sortedZipList.length; i++) {
@@ -371,6 +359,7 @@ function HookLeaflet_rsHomeFooterbottom() {
       document.querySelector("#name_select").selectedIndex = 0;
       document.querySelector("#key_select").selectedIndex = 0;
     }
+*/
 
     //-------------------------KEYWORD SELECTOR---------------------------------
     var keywordSelector = L.control({position: 'bottomright'});
@@ -380,13 +369,20 @@ function HookLeaflet_rsHomeFooterbottom() {
         div.innerHTML = '<select id="key_select" class="selector"><option value="init">(select by keyword)</option></select>';
         return div;
     };
+
     keywordSelector.addTo(map);
+    //Put the selector in a new div that is outside the map and beside the other search otpions
+    //Comment this out to put the selector back on the map
+    var newSelectorDiv = document.getElementById('keywordSelector');
+    var keySelect = document.getElementById('key_select');
+    newSelectorDiv.appendChild(keySelect);
+
     //populate dropdown
     var keywordList = [];
     jsonLyr.eachLayer(function(layer) {
         for (var i = 0; i < layer.feature.properties.keywordArray.length; i++){
             var word = layer.feature.properties.keywordArray[i];
-            if (word && isInArray(word, keywordList) == false) {
+            if (word && isInArray(word, keywordList) == false && isInArray(word, ["Mapped", "Unprocessed", "Transcribed"]) ==false ) {
                 keywordList.push(word);
             }
         }
@@ -420,10 +416,11 @@ function HookLeaflet_rsHomeFooterbottom() {
         jsonLyr2.eachLayer(function(layer) {
         if (isInArray(keyword, layer.feature.properties.keywordArray) == true) {
             map.removeLayer(jsonLyr);
-            //map.removeLayer(selectedMarkers);
             pointsLayer.addLayer(layer);
             selectedMarkers.addLayer(pointsLayer);
+            map.fitBounds(neighborhoodsLayer.getBounds(), {padding: [10, 10]});
             map.addLayer(selectedMarkers);
+
         }
         });
     }
@@ -441,6 +438,7 @@ function HookLeaflet_rsHomeFooterbottom() {
                 map.removeLayer(jsonLyr);
                 pointsLayer.addLayer(layer);
                 selectedMarkers.addLayer(pointsLayer);
+                map.fitBounds(neighborhoodsLayer.getBounds(), {padding: [10, 10]});
                 map.addLayer(selectedMarkers);
             }
        });
