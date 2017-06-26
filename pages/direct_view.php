@@ -1,11 +1,23 @@
 <head>
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<div id="navbar" class="w3-bar w3-mobile">
-    <a id="home_button" href="http://45.55.57.30/resourcespace/pages/home.php" class="w3-bar-item w3-button w3-mobile">View Map</a>
-</div>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <div id="navbar" class="w3-bar w3-mobile">
+        <a id="home_button" href="http://45.55.57.30/resourcespace/pages/home.php" class="w3-bar-item w3-button w3-mobile">View Map</a>
+    </div>
 </head>
+
 <body id="direct_view_page">
+
+<div id="fb-root"></div>
+<script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+        fjs.parentNode.insertBefore(js, fjs);
+    } (document, 'script', 'facebook-jssdk'));
+</script>
 
 <?php
 if(empty($_REQUEST['ID'])){
@@ -18,7 +30,8 @@ else {
 $ID =  htmlspecialchars($_GET["ID"]);
 
 #get mysql access information from config.php
-include "../../../include/config.php";
+include "/var/www/resourcespace/include/config.php";
+
 $host = $mysql_server;
 $user = $mysql_username;
 $pass = $mysql_password;
@@ -62,9 +75,11 @@ if(mysqli_num_rows($result) > 1){
 }
 
 //print the metadata
+//add tweet button to the title div
 while ($row = mysqli_fetch_assoc($result)) {
     echo "<header class=\"w3-container w3-center w3-mobile\"><h1 id=\"title\">";
-        echo $row['title'];
+    echo '<div id = "shareButtons" class="w3-container w3-quarter w3-center w3-mobile" style = "float:right; position:relative; top: -50%" ><a href="https://twitter.com/share" data-size = "large" class="twitter-share-button" style = "margin-bottom: 10px" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div>';
+    echo $row['title'];
     echo "</h1></header><br/>";
     echo "<div class=\"w3-row-padding\">"; //start w3-row for metadata and image
         echo "<div class=\"w3-container w3-quarter w3-center w3-mobile\" id=\"metadata_container\">";
@@ -77,7 +92,6 @@ while ($row = mysqli_fetch_assoc($result)) {
             }
         }
         echo "</div>";
-
         //show the image
         $imgref = $row['ref'];
         echo "<div class=\"w3-container w3-threequarter w3-mobile\" id=\"proposal_img_container\">";
@@ -87,4 +101,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 } //end else
 ?>
+<script>
+//add facebook share button to the title div
+var title = document.getElementById('shareButtons');
+title.innerHTML += "<br/>";
+title.innerHTML += '<div style = "margin-top: 8px" class="fb-share-button" data-href="' + document.URL + '" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>';
+</script>
 </body>
