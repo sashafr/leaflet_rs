@@ -56,7 +56,7 @@ document.addEventListener('click', function(e) {
 
 });
 
-//link checkboxes 
+//link checkboxes
 var linkedCheckboxes = { "nodes_349": ["nodes_340", "nodes_346"], "nodes_347": ["nodes_351"]};
 function makeClickCallback(key) {
   function callback(e){
