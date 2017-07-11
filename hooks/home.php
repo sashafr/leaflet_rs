@@ -129,7 +129,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     }).addTo(map);
 
     //neighborhoods layer
-    var neighborhoodsStyle = {"color": "#4b4ba0", "opacity": 0.8, "fillOpacity": 0.45, "weight": 1};
+    var neighborhoodsStyle = {"color": "#ff6a39", "opacity": 0.8, "fillOpacity": 0.45, "weight": 1};
     var neighborhoodsLayer = L.geoJson(neighborhoods, {style: neighborhoodsStyle}).addTo(map);
     map.fitBounds(neighborhoodsLayer.getBounds(), {padding: [10, 10]});
     //remove the neighborhoods layer when the user zooms in past a certain point
@@ -161,7 +161,7 @@ function HookLeaflet_rsHomeFooterbottom() {
     //format markers
     var geojsonMarkerOptions = {
         radius: 4,
-        fillColor: "#fbaf3f",
+        fillColor: "#77C5D5",
         color: "#737373",
         weight: 1,
         fillOpacity: 1

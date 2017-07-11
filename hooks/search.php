@@ -18,4 +18,5 @@ var loggedIn = "<?php $user=getvalescaped("user",""); echo $user;  ?>";
 if(!loggedIn) {
     loadjscssfile("../plugins/leaflet_rs/css/extra.css", "css");
 }
+
 </script>
