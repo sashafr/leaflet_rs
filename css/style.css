@@ -4,10 +4,15 @@
    padding-left: 30px;
 }
 
+/* background color of nav bar */
+#Header {
+  background: rgb(247, 245, 240) !important;
+}
 
+/* Monument Lab logo text */
 #TextHeader a:link,
 #TextHeader a:visited {
-    color: #4b4ba0;
+    color: rgb(82,73,71);
     font-family: sans-serif;
     font-size: 25px;
     font-weight: bold;
@@ -18,14 +23,15 @@
     top: 10px;
 }
 
+/* Login and nav bar */
 #HeaderNav1, #HeaderNav2 {
   float: right;
 }
 
-
+/* Login button */
 #HeaderNav1 a:link,
 #HeaderNav1 a:visited {
-    color: #4b4ba0;
+    color: rgb(82,73,71);
     font-family: sans-serif;
     font-size: 13px;
     font-weight: bold;
@@ -35,8 +41,10 @@
     opacity: 1;
 }
 
+/* rest of nav bar */
 #HeaderNav2 a:link,
 #HeaderNav2 a:visited {
+    color: rgb(82,73,71);
     font-family: sans-serif;
     font-size: 13px;
     font-weight: bold;
@@ -46,6 +54,7 @@
     opacity: 1;
 }
 
+/* nav bar hovering */
 #HeaderNav2 a:hover,
 #HeaderNav2 .current {
   opacity:0.5;
@@ -53,14 +62,14 @@
 }
 
 #HeaderNav2 .current {
-  color: #fff;
+  color: rgb(255, 106, 57) !important;
   opacity: 1;
   text-decoration: none;
 }
 
 /* leaflet_rs submissions dropdown on nav bar */
 #submissionsButton {
-    color: #4b4ba0;
+    color: rgb(82,73,71);
     border-color: rgba(0,0,0,0);
     background-color: rgba(0,0,0,0);
     box-shadow: none;
@@ -97,21 +106,20 @@
 }
 
 .HeaderMid {
-  color: #4b4ba0;
+  color: rgb(82,73,71);
 }
 
-#Header .current {
-  color: #fff;
-  opacity: 1;
-  text-decoration: none;
-}
 
 /*EDIT ICONS RESOURCESPACE STYLE OVERWRITES*/
 /* pencil icons */
 #ResourceToolsContainer i.fa.fa-pencil {color: #fbaf3f; font-size: 50px;}
-.ResourcePanelIcons a:link[title="Edit resource"],
+/*.ResourcePanelIcons a:link[title="Edit resource"],
 .ResourcePanelIcons a:visited[title="Edit resource"]{color: #fbaf3f; font-size: 35px;}
 /* add/edit location label */
+
+/* Hide icons */
+.ResourcePanelIcons {display: none !important;}
+
 #GeolocationData i.fa.fa-caret-right {color: #fbaf3f; font-size: 30px;}
 #GeolocationData a:link,
 #GeolocationData a:visited {color: #fbab3f; font-size: 30px; font-weight: bold;}
@@ -155,7 +163,7 @@
 #ssearchbox {border: 1px solid #555; border-radius: 5px;}
 
 #searchbutton {
-    background-color: #737373;
+    background-color: #3D3935;
     color: #FFF;
     border: 2px solid #FFF;
     font-family: sans-serif;
@@ -165,11 +173,13 @@
     width: 250px;
     border-radius: 5px;
     text-align: center;
+    opacity: 0.6;
 }
 
 #searchbutton:hover {
-    background-color: #4b4ba0;
-    border: 2px solid #4b4ba0;
+    background-color: #3D3935;
+    border: 2px solid #3D3935;
+    opacity: 1;
 }
 
 /*leaflet_rs styles*/
@@ -183,9 +193,31 @@
     max-height: calc(90vh - 200px);
     width: 90vw;
     max-width: 1000px;
-    border: solid #4b4ba0;
+    border: solid rgb(255, 106, 57);
     border-width: 5px;
 }
+
+.marker-cluster-small {
+	background-color: #77C5D5;
+	}
+.marker-cluster-small div {
+	background-color: #77C5D5;
+	}
+
+.marker-cluster-medium {
+	background-color: #77C5D5;
+	}
+.marker-cluster-medium div {
+	background-color: #77C5D5;
+	}
+
+.marker-cluster-large {
+	background-color: #77C5D5;
+	}
+.marker-cluster-large div {
+	background-color: #77C5D5;
+}
+
 
 #showAll {
     background-color: #FFFFFF;
@@ -243,13 +275,13 @@
 
 /*DIRECT VIEW PAGE - leaflet_rs styles*/
 #direct_view_page {background-color: #FFFFFF;}
-#navbar {background-color: #fbaf3f}
+#navbar {background-color: rgb(247, 245, 240)}
 
 /* view map button */
 #home_button {
     text-decoration: none;
-    background-color: #fbaf3f;
-    color: #4b4ba0;
+    background-color: rgb(247, 245, 240);
+    color: rgb(82,73,71);
     font-family: sans-serif;
     font-weight: bold;
     letter-spacing: 2px;
@@ -264,7 +296,7 @@
 #title {
     font-family: sans-serif;
     font-weight: bold;
-    color: #2e3c43;
+    color: rgb(82,73,71);
     letter-spacing: .5px;
     position: relative;
     padding-top: 1px;
@@ -296,14 +328,16 @@
 
 #social_metadata:link,
 #social_metadata:visited {
-  color: #4b4ba0;
+  color: rgb(255, 106, 57);
   text-decoration: none;
+  opacity: 0.8;
 }
 
 #social_metadata:hover,
 #social_metadata:active {
-  color: #0000EE;
+  color: rgb(255, 106, 57);
   text-decoration: none;
+  opacity: 1;
 }
 
 #transcriptButton {
@@ -332,7 +366,8 @@
 }
 
 #proposal_img {
-  border: solid #4b4ba0;
+  cursor: pointer;
+  border: solid rgb(255, 106, 57);
   border-width: 5px;
   width: 70%;
   /*min-width: 398px;*/
@@ -374,4 +409,10 @@
   #sharebuttons_container {
     order: 3;
   }
+}
+
+/* SEARCH PAGE - disable image link */
+.ResourceAlign {
+   pointer-events: none;
+   cursor: default;
 }
