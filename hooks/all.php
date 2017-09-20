@@ -1,4 +1,31 @@
 <?php
+global $baseurl;
+
+function HookLeaflet_rsAllHeadertop() {
+    ?>
+    <div class="return_link">
+        <a href="http://monumentlab.muralarts.org/">>> Return to Monument Lab</a>
+    </div>
+    <?php
+}
+
+function HookLeaflet_rsAllFootertop() {
+    include "/var/www/resourcespace/include/config.php";
+    ?>
+    <div id="footerdiv">
+        <div class="footertext"><p>Research system created with support from   <a href="https://github.com/sashafr/leaflet_rs"><img src="<?php echo $baseurl ?>/plugins/leaflet_rs/assets/ds_team_stamp_tiny.png" /></a>&nbsp;&nbsp;&&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://pricelab.sas.upenn.edu/"><img src="<?php echo $baseurl ?>/plugins/leaflet_rs/assets/price_lab_logo_tiny.png" /></a></div>
+    </div>
+    <?php
+}
+
+function HookLeafletrs_AllReplaceheadernav1anon() {
+    ?>
+    <div class="sadandempty">
+    test
+    </div>
+    <?php
+}
+
 function HookLeaflet_rsAllAddtologintoolbarmiddle() {
     include "/var/www/resourcespace/include/config.php";
     ?>
@@ -48,10 +75,11 @@ function HookLeaflet_rsAllAddtologintoolbarmiddle() {
 //Reload the home page when the user clinks on anything that links to the homepage
 document.addEventListener('click', function(e) {
     var target = e.target.href;
-    if (target == "http://45.55.57.30/resourcespace/pages/home.php"){
-        window.location.href = "http://45.55.57.30/resourcespace/pages/home.php";
+    if (typeof target !== 'undefined'){
+        if (target.includes("pages/home.php")){
+            window.location.href = "<?php echo $baseurl?>/pages/home.php";
+        }
     }
-
 });
 
 //link checkboxes
@@ -80,18 +108,20 @@ if(!loggedIn) {
     // re-directing proposals to direct_view page when a proposal's title is clicked
     document.addEventListener('click', function(e) {
         var target = e.target.href;
-        if (target.includes("http://45.55.57.30/resourcespace/pages/view.php")){
-          var parametersArray = target.split('&');
-          function parseURLParameter(parameter) {
-            for (var i = 0; i < parametersArray.length; i++) {
-              var currentParameter = parametersArray[i].split('=');
-              if (currentParameter[0] == parameter) {
-                return currentParameter[1];
+        if (typeof target !== 'undefined') {
+            if (target.includes("pages/view.php")){
+              var parametersArray = target.split('&');
+              function parseURLParameter(parameter) {
+                for (var i = 0; i < parametersArray.length; i++) {
+                  var currentParameter = parametersArray[i].split('=');
+                  if (currentParameter[0] == parameter) {
+                    return currentParameter[1];
+                  }
+                }
               }
+              var ref = parseURLParameter("ref");
+                window.location.href = "<?php echo $baseurl?>/plugins/leaflet_rs/pages/direct_view.php?ref=" + ref;
             }
-          }
-          var ref = parseURLParameter("ref");
-            window.location.href = "http://45.55.57.30/resourcespace/plugins/leaflet_rs/pages/direct_view.php?ref=" + ref;
         }
     });
 }

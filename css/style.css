@@ -1,4 +1,98 @@
 /*RESOURCESPACE STYLE OVERWRITES - HEADER AND FOOTER ON ALL PAGES*/
+/*Styling for legend */
+.leaflet-left .leaflet-control {
+  background:white;
+  border: 2px solid #CCCCCC;
+  color: #737373;
+  font-family: sans-serif
+}
+
+#legendTitle {
+  font-size:20px;
+  font-weight:bold;
+  letter-spacing:2px;
+  margin:8px;
+  text-transform:uppercase
+}
+
+#legendCircle1 {
+  background: #77C5D5;
+  width:14px;
+  height:14px;
+  border-radius:7px/7px;
+  display:inline-block
+}
+
+#legendCircle2 {
+  background: #0B5818;
+  width:10px;
+  height:10px;
+  border-radius:5px/5px;
+  display:inline-block
+}
+
+/* styling for the toggle switch */
+.layerText {
+          word-wrap:break-word;
+          word-break:break-word;
+          width:50px;
+          line-height:12px;
+          position:relative;
+          display: inline-block;
+          vertical-align: middle;
+          font-weight: bold;
+          font-family: pragmatica, sans-serif;
+        }
+          .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        }
+
+      .switch input {display:none;}
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+
+      input:checked + .slider {
+        background-color: #2196F3;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+
+
+
+
 .HorizontalWhiteNav li, .HorizontalNav li {
    border-left: none;
    padding-left: 30px;
@@ -7,13 +101,95 @@
 /* background color of nav bar */
 #Header {
   background: rgb(247, 245, 240) !important;
+  height: 70px;
+}
+
+@media(max-width:1200px) {
+  #Header {
+    height: 70px !important;
+  }
+  #HeaderButtons {
+    display: none !important;
+  }
+  #HeaderNav1 {
+    display:block;
+    clear:none;
+  }
+  #HeaderNav2 {
+    display:block;
+    margin-top:-5px;
+  }
+  #HeaderImg {
+    height:47px;
+  }
+  #Header .HorizontalNav ul li a {
+    color: inherit;
+    display: inline-block;
+    text-align: center;
+    background: none;
+    border: 0;
+    height:70px !important;
+    line-height: 1em;
+    min-width: initial;
+    padding: 0 5px;
+    margin-bottom: 0;
+  }
+  .HorizontalNav ul {
+    padding: 0em 0;
+  }
+  #Header.slimheader_darken a:link, #Header.slimheader_darken a:visited, #Header.slimheader_darken a:active {
+    color: #E1E8F0;
+  }
+}
+
+@media(max-width:1100px) {
+  #Header {
+    min-height: 47px;
+  }
+  #HeaderButtons {
+    display: none !important;
+  }
+  #HeaderNav1 {
+    display:none !important;
+    clear:both;
+  }
+  #HeaderNav2 {
+    display:none !important;
+  }
+  #Header .HorizontalNav ul li a {
+    color: #4E4646;
+    display:inline-block;
+    text-align: center;
+    background: #d2d2d2;
+    border: 1px solid white;
+    height: 45px;
+    line-height: 45px;
+    min-width:95px;
+    padding:0 5px;
+    border-radius:6px;
+    margin-bottom:5px;
+  }
+  #Header.slimheader_darken a:link, #Header.slimheader_darken a:visited, #Header.slimheader_darken a:active {
+    color: #565656;
+  }
+}
+@media(max-width:575px) {
+  #HeaderImg {
+    height:auto;
+    max-height:47px;
+  }
+}
+@media(min-width:1101px) {
+  #HeaderNav1, #HeaderNav2  {
+    display:block !important;
+  }
 }
 
 /* Monument Lab logo text */
 #TextHeader a:link,
 #TextHeader a:visited {
     color: rgb(82,73,71);
-    font-family: sans-serif;
+    font-family: pragmatica, sans-serif;
     font-size: 25px;
     font-weight: bold;
     position: relative;
@@ -32,7 +208,7 @@
 #HeaderNav1 a:link,
 #HeaderNav1 a:visited {
     color: rgb(82,73,71);
-    font-family: sans-serif;
+    font-family: pragmatica, sans-serif;
     font-size: 13px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -45,7 +221,7 @@
 #HeaderNav2 a:link,
 #HeaderNav2 a:visited {
     color: rgb(82,73,71);
-    font-family: sans-serif;
+    font-family: pragmatica, sans-serif;
     font-size: 13px;
     font-weight: bold;
     letter-spacing: 1.5px;
@@ -74,7 +250,7 @@
     background-color: rgba(0,0,0,0);
     box-shadow: none;
     text-transform: uppercase;
-    font-family: sans-serif;
+    font-family: pragmatica, sans-serif;
     font-size: 13px;
     letter-spacing: 2px;
     font-weight: bold;
@@ -166,7 +342,7 @@
     background-color: #3D3935;
     color: #FFF;
     border: 2px solid #FFF;
-    font-family: sans-serif;
+    font-family: pragmatica, sans-serif;
     font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -223,7 +399,7 @@
     background-color: #FFFFFF;
     color: #737373;
     border: 2px solid #CCCCCC;
-    font-family: sans-serif;
+    font-family: pragmatica, sans-serif;
     font-size: 14px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -237,17 +413,17 @@
 #selector_container {margin-bottom: 20px;}
 
 .selector {
-    font-size: 14px;
-    font-family: sans-serif;
+    font-size: 18px;
+    font-family: pragmatica, sans-serif;
     letter-spacing: 1px;
-    border: 2px solid #CCCCCC;
+    border: 2px solid #ff6a39;
     border-radius: 5px;
     background-color: #FFFFFF;
-    font-weight: bold;
+    padding: 6px;
     color: #737373;
 }
 
-.leaflet-popup-content-wrapper {background-color: #2e3c43; color: white; font-family: sans-serif;}
+.leaflet-popup-content-wrapper {background-color: #2e3c43; color: white; font-family: pragmatica, sans-serif;}
 .leaflet-popup-tip {background-color: #2e3c43;}
 
 .social_icon {
@@ -266,6 +442,43 @@
     margin-top: 30px;
 }
 
+.footertext > a {
+    color: #ffffff;
+    text-align: right;
+  }
+
+.footertext {
+    font-family: pragmatica, sans-serif;
+    font-style: normal;
+    font-weight: 200;
+    color: #ffffff;
+    text-align: right;
+    font-size: 12pt;
+    padding: 10px 20px 0px 0px;
+  }
+
+#pricetext {
+  font-family: pragmatica, sans-serif;
+  font-style: normal;
+  font-weight: 200;
+  color: #ffffff;
+  padding-left: 20px;
+  font-size: 12pt;
+  position: relative;
+  bottom: -25px;
+}
+
+#pricetext > a {
+  color:#ffffff;
+}
+
+#footerdiv {
+    background-color: #FF6A39;
+    width: 100%;
+    margin-top: 30px;
+    position: relative;
+}
+
 .logo {
     display: inline-block;
     margin-left: 30px;
@@ -273,16 +486,27 @@
     vertical-align: middle;
 }
 
+.return_link {
+    float: left;
+    padding: 15px 0px 0px 10px;
+}
+
 /*DIRECT VIEW PAGE - leaflet_rs styles*/
 #direct_view_page {background-color: #FFFFFF;}
-#navbar {background-color: rgb(247, 245, 240)}
+#navbar {
+  background-color: rgb(247, 245, 240)
+}
+
+.error_message {
+  padding: 50px;
+}
 
 /* view map button */
 #home_button {
     text-decoration: none;
     background-color: rgb(247, 245, 240);
     color: rgb(82,73,71);
-    font-family: sans-serif;
+    font-family: pragmatica, sans-serif;
     font-weight: bold;
     letter-spacing: 2px;
     font-size: 20px;
@@ -294,10 +518,9 @@
 }
 
 #title {
-    font-family: sans-serif;
-    font-weight: bold;
+    font-family: harfang-pro, serif;
+    font-weight: 200;
     color: rgb(82,73,71);
-    letter-spacing: .5px;
     position: relative;
     padding-top: 1px;
 }
@@ -313,7 +536,7 @@
 #metadata_container {
     box-sizing: content-box;
     font-size: 20px;
-    font-family: sans-serif;
+    font-family: harfang-pro, serif;
     color: #2e3c43;
     letter-spacing: 1px;
     width: 25%;
@@ -322,8 +545,9 @@
 }
 
 .metadata_label {
-  text-transform: uppercase;
   margin-top: 20px;
+  font-family: harfang-pro, serif;
+  font-style: normal;
 }
 
 #social_metadata:link,
@@ -342,19 +566,19 @@
 
 #transcriptButton {
   color: #2e3c43;
-  border-color: rgba(0,0,0,0);
+  border-color: #86D2DA;
   background-color: rgba(0,0,0,0);
   box-shadow: none;
   text-transform: uppercase;
-  font-family: sans-serif;
+  font-family: pragmatica, sans-serif;
   font-size: 20px;
   letter-spacing: 1px;
-  padding: 0px;
+  padding: 10px;
 }
 
 #transcription {
   color: #2e3c43;
-  font-family: sans-serif;
+  font-family: harfang-pro, serif;
   font-size: 16px;
   letter-spacing: 0px;
 }
@@ -404,6 +628,7 @@
   #transcriptButton,
   #transcription {
     margin-left: 32.5%;
+    font-family: harfang-pro, serif;
   }
 
   #sharebuttons_container {
