@@ -42,7 +42,8 @@ function HookLeaflet_rsAllAddtologintoolbarmiddle() {
     var dropdownElement = document.getElementById("submissions_dropdown");
     //dropdownElement.innerHTML = '<a class="dropdown_option" href="' + baseUrl + '/pages/search.php?search=field94%3AUnprocessed&resetrestypes=true">Unprocessed<br/></a>';
     dropdownElement.innerHTML += '<a class="dropdown_option" href="' + baseUrl + '/pages/search.php?search=field94%3AMapped&resetrestypes=true">Mapped<br/></a>';
-    dropdownElement.innerHTML += '<a class="dropdown_option" href="' + baseUrl + '/pages/search.php?search=field94%3ATranscribed&resetrestypes=true">Transcribed</a>';
+    dropdownElement.innerHTML += '<a class="dropdown_option" href="' + baseUrl + '/pages/search.php?search=field94%3ATranscribed&resetrestypes=true">Transcribed<br /></a>';
+    dropdownElement.innerHTML += '<a class="dropdown_option" href="' + baseUrl + '/pages/search.php?search=field94%3AUnprocessed&resetrestypes=true">Unprocessed</a>';
 
     //hide dropdown initially
     document.getElementById('submissions_dropdown').style.display = "none";

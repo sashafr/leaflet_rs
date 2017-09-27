@@ -360,22 +360,18 @@ function HookLeaflet_rsHomeFooterbottom() {
         clustersOn = false;
         //if points are selected and the cluster toggle is changed, redo the selection
         //with the new clustering option
-       if (document.querySelector("#location_select").selectedIndex != 0) {
+        /*if (document.querySelector("#location_select").selectedIndex != 0) {
           map.removeLayer(selectedMarkers);
           changeHandler();
         }
-        if (document.querySelector("#zip_select").selectedIndex != 0) {
-           map.removeLayer(selectedMarkers);
-           changeHandler2();
-         }
-       /* if (document.querySelector("#type_select").selectedIndex != 0) {
+        if (document.querySelector("#type_select").selectedIndex != 0) {
           map.removeLayer(selectedMarkers);
-          changeHandler3();
+          changeHandler2();
         }
         if (document.querySelector("#key_select").selectedIndex != 0) {
           map.removeLayer(selectedMarkers);
-          changeHandler4();
-        } */
+          changeHandler3();
+        }*/
         return;
       }
 
@@ -385,21 +381,17 @@ function HookLeaflet_rsHomeFooterbottom() {
         clustersOn = true;
         //if points are selected and the cluster toggle is changed, redo the selection
         //with the new clustering option
-        if (document.querySelector("#location_select").selectedIndex != 0) {
+        /*if (document.querySelector("#location_select").selectedIndex != 0) {
           map.removeLayer(selectedUnclusteredMarkers)
           changeHandler();
         }
-        if (document.querySelector("#zip_select").selectedIndex != 0) {
+        if (document.querySelector("#type_select").selectedIndex != 0) {
           map.removeLayer(selectedUnclusteredMarkers)
           changeHandler2();
         }
-        /*if (document.querySelector("#type_select").selectedIndex != 0) {
-          map.removeLayer(selectedUnclusteredMarkers)
-          changeHandler3();
-        }
         if (document.querySelector("#key_select").selectedIndex != 0) {
           map.removeLayer(selectedUnclusteredMarkers)
-          changeHandler4();
+          changeHandler3();
         }*/
         return;
       }
@@ -454,9 +446,55 @@ function HookLeaflet_rsHomeFooterbottom() {
         document.querySelector("#key_select").selectedIndex = 0;
     }
 */
+    //-------------------------ZIPCODE SELECTOR---------------------------------
+    //create selector by zip code
+/*  var zipcodeSelector = L.control({position: 'bottomright'});
+    zipcodeSelector.onAdd = function(map) {
+        //create div container
+        var div2 = L.DomUtil.create('div', 'mySelector2');
+        //create select element within container (with id, so it can be populated later
+        div2.innerHTML = '<select id="zip_select" class="selector"><option value="init">(select by zipcode of creator)</option></select>';
+        return div2;
+    };
 
+    zipcodeSelector.addTo(map);
+    //add each name to a list
+    var myZipList = [];
+    jsonLyr.eachLayer(function(layer) {
+        //if the name is already in the list, don't add it
+        if (isInArray(layer.feature.properties.zipcode, myZipList) == true) {
+            return;
+        }
+        else {
+            myZipList.push(layer.feature.properties.zipcode);
+        }
+    });
+    //check to see if the item is already in the list
+
+
+    var sortedZipList = myZipList.sort();
+    //add the items in the sorted list into the selector
+    for (var i = 0; i < sortedZipList.length; i++) {
+        var optionElement = document.createElement("option");
+        optionElement.innerHTML = sortedZipList[i];
+        L.DomUtil.get("zip_select").appendChild(optionElement);
+    }
+    var zip_select = L.DomUtil.get("zip_select");
+    //prevent clicks on the selector from propagating through to the map
+    L.DomEvent.addListener(zip_select, 'click', function(e) {
+        L.DomEvent.stopPropagation(e);
+    });
+    //listen for user to select item from the dropdown
+    L.DomEvent.addListener(zip_select, 'change', changeHandler2);
+    //when a zipcode is selected, remove all other points
+    function changeHandler2() {
+      searchPoints("zip_select", 'layer.feature.properties.zipcode');
+      document.querySelector("#name_select").selectedIndex = 0;
+      document.querySelector("#key_select").selectedIndex = 0;
+    }
+*/
 //---------------------------LAB LOCATION SELECTOR---------------------------
-
+/*
     var locationSelector = L.control({position: 'bottomright'});
     //put selector on map
     locationSelector.onAdd = function(map) {
@@ -506,59 +544,7 @@ function HookLeaflet_rsHomeFooterbottom() {
       document.querySelector("#key_select").selectedIndex = 0;
       document.querySelector("#type_select").selectedIndex = 0;
     }
-    //-------------------------ZIPCODE SELECTOR---------------------------------
-    //create selector by zip code
-  var zipcodeSelector = L.control({position: 'bottomright'});
-    zipcodeSelector.onAdd = function(map) {
-        //create div container
-        var div2 = L.DomUtil.create('div', 'mySelector2');
-        //create select element within container (with id, so it can be populated later
-        div2.innerHTML = '<select id="zip_select" class="selector"><option value="init">Select by Zipcode of Creator</option></select>';
-        return div2;
-    };
-
-    zipcodeSelector.addTo(map);
-    //Put the selector in a new div that is outside the map and beside the other search otpions
-        //Comment this out to put the selector back on the map
-
-    var zipSelect = document.getElementById('zip_select');
-    selectorDiv.appendChild(zipSelect);
-
-    //add each name to a list
-    var myZipList = [];
-    jsonLyr.eachLayer(function(layer) {
-        //if the name is already in the list, don't add it
-        if (isInArray(layer.feature.properties.zipcode, myZipList) == true) {
-            return;
-        }
-        else {
-            myZipList.push(layer.feature.properties.zipcode);
-        }
-    });
-    //check to see if the item is already in the list
-
-
-    var sortedZipList = myZipList.sort();
-    //add the items in the sorted list into the selector
-    for (var i = 0; i < sortedZipList.length; i++) {
-        var optionElement = document.createElement("option");
-        optionElement.innerHTML = sortedZipList[i];
-        L.DomUtil.get("zip_select").appendChild(optionElement);
-    }
-    var zip_select = L.DomUtil.get("zip_select");
-    //prevent clicks on the selector from propagating through to the map
-    L.DomEvent.addListener(zip_select, 'click', function(e) {
-        L.DomEvent.stopPropagation(e);
-    });
-    //listen for user to select item from the dropdown
-    L.DomEvent.addListener(zip_select, 'change', changeHandler2);
-    //when a zipcode is selected, remove all other points
-    function changeHandler2() {
-      searchPoints("zip_select", 'layer.feature.properties.zipcode');
-      document.querySelector("#name_select").selectedIndex = 0;
-      document.querySelector("#key_select").selectedIndex = 0;
-    }
-
+*/
 // //------------------------------TYPE SELECTOR--------------------------------
 //
 //     var typeSelector = L.control({position: 'bottomright'});

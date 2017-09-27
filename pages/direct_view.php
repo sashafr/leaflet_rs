@@ -74,10 +74,12 @@ $result = mysqli_query($connection, $query);
 
 //error message for user if ID isn't in database
 if(mysqli_num_rows($result) == 0){
-    echo "<br />";
-    echo "<h1 class=\"error_message\">The data team is processing this proposal.</h2><br />";
-    echo "<h2 class=\"error_message\"> While you wait for the image to be transcribed and analyzed, please explore the map on the home page and check back soon!</h2><br />";
-
+    //show the image
+    echo "<div class=\"w3-content w3-container w3-mobile\" id=\"proposal_img_container\">";
+    $imgref = $row['ref'];
+    echo "<img id=\"proposal_img\" src=\"".$baseurl."/pages/download.php?ref=".$proposal_ref."\" alt=\"This image is not currently available.\">";
+    echo "</div>";
+    ; //end w3 row
 }
 
 //if there were two files with the same research ID, display the first one
