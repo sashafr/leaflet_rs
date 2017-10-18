@@ -324,10 +324,10 @@ function HookLeaflet_rsHomeFooterbottom() {
 
         map.fitBounds(neighborhoodsLayer.getBounds(), {padding: [10, 10]});
         //reset dropdown to default text
-        //var dropdowns = document.querySelectorAll(".selector")
-      //  for (var i = 0; i < dropdowns.length; i++) {
-        //  dropdowns[i].selectedIndex = 0;
-        //}
+        var dropdowns = document.querySelectorAll(".selector")
+        for (var i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].selectedIndex = 0;
+        }
     };
 
 //----------------------------MARKER CLUSTER TOGGLE--------------------------
@@ -503,8 +503,9 @@ function HookLeaflet_rsHomeFooterbottom() {
 
     function changeHandler() {
       searchPoints('location_select', 'layer.feature.properties.labLocation');
-      document.querySelector("#key_select").selectedIndex = 0;
-      document.querySelector("#type_select").selectedIndex = 0;
+      //document.querySelector("#key_select").selectedIndex = 0;
+      //document.querySelector("#type_select").selectedIndex = 0;
+      document.querySelector("#zip_select").selectedIndex = 0;
     }
     //-------------------------ZIPCODE SELECTOR---------------------------------
     //create selector by zip code
@@ -555,8 +556,10 @@ function HookLeaflet_rsHomeFooterbottom() {
     //when a zipcode is selected, remove all other points
     function changeHandler2() {
       searchPoints("zip_select", 'layer.feature.properties.zipcode');
-      document.querySelector("#name_select").selectedIndex = 0;
-      document.querySelector("#key_select").selectedIndex = 0;
+      //document.querySelector("#name_select").selectedIndex = 0;
+      //document.querySelector("#key_select").selectedIndex = 0;
+      document.querySelector("#location_select").selectedIndex = 0;
+
     }
 
 // //------------------------------TYPE SELECTOR--------------------------------
